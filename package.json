@@ -1,6 +1,6 @@
 {
   "name": "justo-assert",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "An assertion framework.",
   "homepage": "www.justojs.org",
   "author": {
@@ -21,11 +21,6 @@
     "assert",
     "test",
     "unit test"
-  ],
-  "os": [
-    "Linux",
-    "Mac",
-    "Windows"
   ],
   "bugs": {
     "url": "https://github.com/justojs/justo-assert/issues",

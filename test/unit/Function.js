@@ -302,6 +302,34 @@ describe("must<Function>", function() {
   		fn.must.not.be.between(1, 2);
   	});
   });
+  
+  describe("#must.be.lessThan()", function() {
+  	it("be.lessThan(bound) - must not", function() {
+  		(function() {
+  			fn.must.be.lessThan(1);
+  		}).should.throwError(Error, {name: "AssertionError"});
+  	});
+  });
+  
+  describe("#must.not.be.lessThan()", function() {
+  	it("not.be.lessThan(bound) - must", function() {
+  		fn.must.not.be.lessThan(1);
+  	});
+  });
+  
+  describe("#must.be.greaterThan()", function() {
+  	it("be.greaterThan(bound) - must not", function() {
+  		(function() {
+  			fn.must.be.greaterThan(1);
+  		}).should.throwError(Error, {name: "AssertionError"});
+  	});
+  });
+  
+  describe("#must.not.be.greaterThan()", function() {
+  	it("not.be.greaterThan(bound) - must", function() {
+  		fn.must.not.be.greaterThan(1);
+  	});
+  });
 
   describe("#must.be.instanceOf()", function() {
     it("be.instanceOf(string) - must not", function() {

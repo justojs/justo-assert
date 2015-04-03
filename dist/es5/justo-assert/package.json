@@ -1,12 +1,12 @@
 {
   "name": "justo-assert",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "An assertion framework.",
-  "homepage": "www.justojs.org",
+  "homepage": "http://www.justojs.org",
   "author": {
     "name": "Justo.js Development Group",
     "email": "justojs.org@outlook.com",
-    "url": "www.justojs.org"
+    "url": "http://www.justojs.org"
   },
   "contributors": [
     {
@@ -16,11 +16,13 @@
     }
   ],
   "keywords": [
-    "justo",
-    "justo.js",
+    "Justo",
+    "Justo.js",
     "assert",
     "test",
-    "unit test"
+    "Unit test",
+    "JavaScript test",
+    "Node.js test"
   ],
   "bugs": {
     "url": "https://github.com/justojs/justo-assert/issues",
@@ -38,7 +40,7 @@
   ],
   "bin": {},
   "engines": {
-    "node": ">= 0.12.0"
+    "node": "*"
   },
   "dependencies": {},
   "peerDependencies": {},

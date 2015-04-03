@@ -235,6 +235,78 @@ describe("must<boolean>", function() {
     });
   });
   
+  describe("#must.be.lessThan()", function() {
+  	it("be.lessThan(bound) - must", function() {
+  		true.must.be.lessThan(2);
+  	});
+  	
+  	it("be.lessThan(bound) - must not", function() {
+  		(function() {
+  			true.must.be.lessThan(1);
+  		}).should.throwError(Error, {name: "AssertionError"});
+  	});
+  	
+  	it("be.lessThan(bound, msg) - must not", function() {
+  		(function() {
+  			true.must.be.lessThan(1, "Custom message")
+  		}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+  	});
+  });
+  
+  describe("#must.not.be.lessThan()", function() {
+  	it("not.be.lessThan(bound) - must", function() {
+  		true.must.not.be.lessThan(0);
+  	});
+  	
+  	it("not.be.lessThan(bound) - must not", function() {
+  		(function() {
+  			true.must.not.be.lessThan(2);
+  		}).should.throwError(Error, {name: "AssertionError"});
+  	});
+  	
+  	it("not.be.lessThan(bound, msg) - must not", function() {
+  		(function() {
+  			true.must.not.be.lessThan(2, "Custom message")
+  		}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+  	});
+  });
+  
+  describe("#must.be.greaterThan()", function() {
+  	it("be.greaterThan(bound) - must", function() {
+  		true.must.be.greaterThan(0);
+  	});
+  	
+  	it("be.greaterThan(bound) - must not", function() {
+  		(function() {
+  			true.must.be.greaterThan(1);
+  		}).should.throwError(Error, {name: "AssertionError"});
+  	});
+  	
+  	it("be.greaterThan(bound, msg) - must not", function() {
+  		(function() {
+  			true.must.be.greaterThan(1, "Custom message")
+  		}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+  	});
+  });
+  
+  describe("#must.not.be.greaterThan()", function() {
+  	it("not.be.greaterThan(bound) - must", function() {
+  		true.must.not.be.greaterThan(1);
+  	});
+  	
+  	it("not.be.greaterThan(bound) - must not", function() {
+  		(function() {
+  			true.must.not.be.greaterThan(0);
+  		}).should.throwError(Error, {name: "AssertionError"});
+  	});
+  	
+  	it("not.be.greaterThan(bound, msg) - must not", function() {
+  		(function() {
+  			true.must.not.be.greaterThan(0, "Custom message")
+  		}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+  	});
+  });
+  
   describe("#must.be.instanceOf()", function() {
     it("be.instanceOf(boolean) - must", function() {
       true.must.be.instanceOf(Boolean);

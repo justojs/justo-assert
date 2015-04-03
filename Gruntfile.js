@@ -81,7 +81,7 @@ module.exports = function(grunt) {
     	options: {
     		ignoreLeaks: false,
     		quiet: false,
-    		reporter: "dot",
+    		reporter: "spec",
   			timeout: 1500
     	},
     	

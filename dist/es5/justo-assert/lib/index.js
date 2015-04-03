@@ -287,6 +287,38 @@ var MustBe = (function (_Wrapper3) {
         (_mustBeBetween = mustBeBetween).call.apply(_mustBeBetween, [mustBeBetween, this.value].concat(args));
       }
     },
+    lessThan: {
+
+      /**
+       * Checks whether the wrapped value is less than another.
+       */
+
+      value: function lessThan() {
+        var _mustBeLessThan;
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        (_mustBeLessThan = mustBeLessThan).call.apply(_mustBeLessThan, [mustBeLessThan, this.value].concat(args));
+      }
+    },
+    greaterThan: {
+
+      /**
+       * Checks whether the wrapped value is greater than another.
+       */
+
+      value: function greaterThan() {
+        var _mustBeGreaterThan;
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        (_mustBeGreaterThan = mustBeGreaterThan).call.apply(_mustBeGreaterThan, [mustBeGreaterThan, this.value].concat(args));
+      }
+    },
     instanceOf: {
 
       /**
@@ -371,6 +403,38 @@ var MustNotBe = (function (_Wrapper4) {
         (_mustNotBeBetween = mustNotBeBetween).call.apply(_mustNotBeBetween, [mustNotBeBetween, this.value].concat(args));
       }
     },
+    lessThan: {
+
+      /**
+       * Checks whether the wrapped value isn't less than another.
+       */
+
+      value: function lessThan() {
+        var _mustNotBeLessThan;
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        (_mustNotBeLessThan = mustNotBeLessThan).call.apply(_mustNotBeLessThan, [mustNotBeLessThan, this.value].concat(args));
+      }
+    },
+    greaterThan: {
+
+      /**
+       * Checks whether the wrapped value isn't greater than another.
+       */
+
+      value: function greaterThan() {
+        var _mustNotBeGreaterThan;
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        (_mustNotBeGreaterThan = mustNotBeGreaterThan).call.apply(_mustNotBeGreaterThan, [mustNotBeGreaterThan, this.value].concat(args));
+      }
+    },
     instanceOf: {
 
       /**
@@ -443,7 +507,7 @@ exports.mustNotBeSame = mustNotBeSame;
 exports.mustBeBetween = mustBeBetween;
 
 /**
- * Checks whether a vallue is not within a range.
+ * Checks whether a value is not within a range.
  *
  * @param value:any     The value.
  * @param left:any      The lowerbound inclusive.
@@ -451,6 +515,42 @@ exports.mustBeBetween = mustBeBetween;
  * @param [msg]:string  The message if error.
  */
 exports.mustNotBeBetween = mustNotBeBetween;
+
+/**
+ * Checks whether a value is greater than another.
+ * 
+ * @param actual:any		The value.
+ * @param expected:any	The lowerbound exclusive.
+ * @param [msg]:string	The message if error.
+ */
+exports.mustBeGreaterThan = mustBeGreaterThan;
+
+/**
+ * Checks whether a value is not greater than another.
+ * 
+ * @param actual:any		The value.
+ * @param expected:any	The lowerbound exclusive.
+ * @param [msg]:string	The message if error.
+ */
+exports.mustNotBeGreaterThan = mustNotBeGreaterThan;
+
+/**
+ * Checks whether a value is less than another.
+ * 
+ * @param actual:any		The value.
+ * @param expected:any	The upperbound exclusive.
+ * @param [msg]:string	The message if error.
+ */
+exports.mustBeLessThan = mustBeLessThan;
+
+/**
+ * Checks whether a value is not less than another.
+ * 
+ * @param actual:any		The value.
+ * @param expected:any	The upperbound exclusive.
+ * @param [msg]:string	The message if error.
+ */
+exports.mustNotBeLessThan = mustNotBeLessThan;
 
 /**
  * Checks whether an object has specified properties.
@@ -594,6 +694,30 @@ function mustBeBetween(value, left, right, msg) {
 function mustNotBeBetween(value, left, right, msg) {
   if (value >= left && value <= right) {
     throw new AssertionError("'" + value + "' must not be between '" + left + "' and '" + right + "'.", msg);
+  }
+}
+
+function mustBeGreaterThan(actual, expected, msg) {
+  if (!(actual > expected)) {
+    throw new AssertionError("'" + actual + "' must be greater than '" + expected + "'.", msg);
+  }
+}
+
+function mustNotBeGreaterThan(actual, expected, msg) {
+  if (actual > expected) {
+    throw new AssertionError("'" + actual + "' must not be greater than '" + expected + "'.", msg);
+  }
+}
+
+function mustBeLessThan(actual, expected, msg) {
+  if (!(actual < expected)) {
+    throw new AssertionError("'" + actual + "' must be less than '" + expected + "'.", msg);
+  }
+}
+
+function mustNotBeLessThan(actual, expected, msg) {
+  if (actual < expected) {
+    throw new AssertionError("'" + actual + "' must not be less than '" + expected + "'.", msg);
   }
 }
 

@@ -237,6 +237,60 @@ describe("must<number>", function() {
     });
   });
   
+  describe("#must.be.lessThan()", function() {
+  	it("be.lessThan(bound) - must", function() {
+  		x.must.be.lessThan(y);
+  	});
+  	
+  	it("be.lessThan(bound) - must not", function() {
+  		(function() {
+  			x.must.be.lessThan(x);
+  		}).should.throwError(Error, {name: "AssertionError"});
+  	});
+  	
+  	it("be.lessThan(bound, msg) - must not", function() {
+  		(function() {
+  			x.must.be.lessThan(x, "Custom message");
+  		}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+  	});
+  });
+  
+  describe("#must.not.be.lessThan()", function() {
+  	it("not.be.lessThan(bound) - must", function() {
+  		x.must.not.be.lessThan(x);
+  	});
+  	
+  	it("not.be.lessThan(bound) - must not", function() {
+  		(function() {
+  			x.must.not.be.lessThan(y);
+  		}).should.throwError(Error, {name: "AssertionError"});
+  	});
+  	
+  	it("not.be.lessThan(bound, msg) - must not", function() {
+  		(function() {
+  			x.must.not.be.lessThan(y, "Custom message");
+  		}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+  	});
+  });
+  
+  describe("#must.be.greaterThan()", function() {
+  	it("be.greaterThan(bound) - must", function() {
+  		y.must.be.greaterThan(x);
+  	});
+  	
+  	it("be.greaterThan(bound) - must not", function() {
+  		(function() {
+  			x.must.be.greaterThan(y);
+  		}).should.throwError(Error, {name: "AssertionError"});
+  	});
+  	
+  	it("be.greaterThan(bound, msg) - must not", function() {
+  		(function() {
+  			x.must.be.greaterThan(y, "Custom message");
+  		}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+  	});
+  });
+  
   describe("#must.be.instanceOf()", function() {
     it("be.instanceOf(string) - must not", function() {
     	(function() {

@@ -2,8 +2,6 @@
 
 "use strict";
 
-var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
 var _get = function get(object, property, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc && desc.writable) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
 var _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
@@ -13,11 +11,14 @@ var _classCallCheck = function (instance, Constructor) { if (!(instance instance
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+//imports
+var _AssertionError = require("assert").AssertionError;
+
 /**
  * An assertion error.
  */
 
-var AssertionError = exports.AssertionError = (function (_Error) {
+var AssertionError = exports.AssertionError = (function (_AssertionError2) {
   /**
    * Initializes the error.
    *
@@ -28,24 +29,17 @@ var AssertionError = exports.AssertionError = (function (_Error) {
   function AssertionError(msg1, msg2) {
     _classCallCheck(this, AssertionError);
 
-    _get(Object.getPrototypeOf(AssertionError.prototype), "constructor", this).call(this);
+    //(1) arguments
+    if (!msg1 && !msg2) throw new Error("Error message expected.");
 
-    this.message = msg2 || msg1;
-    this.name = "AssertionError";
+    //(2) superconstructor
+    _get(Object.getPrototypeOf(AssertionError.prototype), "constructor", this).call(this, { message: msg2 || msg1 });
   }
 
-  _inherits(AssertionError, _Error);
-
-  _createClass(AssertionError, {
-    toString: {
-      value: function toString() {
-        return "" + this.name + ": " + this.message;
-      }
-    }
-  });
+  _inherits(AssertionError, _AssertionError2);
 
   return AssertionError;
-})(Error);
+})(_AssertionError);
 
 "use strict";
 

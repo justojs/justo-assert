@@ -90,23 +90,13 @@ module.exports = function(grunt) {
           require: [
             "should",
             "util",
-            "dist/es5/<%= pkg.name %>"
+            "justo-assert"
           ]
         },
 
         src: [
           "test/unit/*.js"
         ]
-      }
-    },
-
-    uglify: {
-      options: {
-        banner: '<%= banner %>'
-      },
-      dist: {
-        src: '<%= concat.dist.dest %>',
-        dest: 'dist/justo assert.min.js'
       }
     }
   });

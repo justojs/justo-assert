@@ -12,20 +12,22 @@ Proudly developed in JavaScript (ES6) from Valencia, Spain.
 
 The assertion is similar to `Should.js` , but with `must`.
 
-### must.be.equal()
+### must.be.equal() and must.be.eq()
 
 Checks whether a value is equal to another:
 
 ```
 x.must.be.equal(123);
+x.must.be.eq(123);
 ```
 
-### must.not.be.equal()
+### must.not.be.equal() and must.not.be.eq()
 
 Checks whether a value is not equal to another:
 
 ```
 x.must.not.be.equal(123);
+x.must.not.be.eq(123);
 ```
 
 ### must.be.same()
@@ -33,7 +35,7 @@ x.must.not.be.equal(123);
 Checks whether if a value is strictly another:
 
 ```
-user1.must.be.equal(user2);
+user1.must.be.same(user2);
 ```
 
 ### must.not.be.same()
@@ -60,36 +62,40 @@ Checks whether a value is not within a range:
 x.must.not.be.between(1, 10);
 ```
 
-### must.be.lessThan()
+### must.be.lessThan() and must.be.lt()
 
 Checks whether a value is less than another:
 
 ```
 x.must.be.lessThan(y);
+x.must.be.lt(y);
 ``` 
 
-### must.not.be.lessThan()
+### must.not.be.lessThan() and must.not.be.lt()
 
 Checks whether a value is not less than another:
 
 ```
 x.must.not.be.lessThan(y);
+x.must.not.be.lt(y);
 ```
 
-### must.be.greaterThan()
+### must.be.greaterThan() and must.be.gt()
 
 Checks whether a value is greater than another:
 
 ```
 x.must.be.greaterThan(y);
+x.must.be.gt(y);
 ```
 
-### must.not.be.greaterThan()
+### must.not.be.greaterThan() and must.not.be.gt()
 
 Checks whether a value is not greater than another:
 
 ```
 x.must.not.be.greaterThan(y);
+x.must.not.be.gt(y);
 ```
 
 ### must.contain()

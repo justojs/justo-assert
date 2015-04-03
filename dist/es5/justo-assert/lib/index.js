@@ -281,6 +281,20 @@ var MustBe = (function (_Wrapper3) {
         (_mustBeEqual = mustBeEqual).call.apply(_mustBeEqual, [mustBeEqual, this.value].concat(args));
       }
     },
+    eq: {
+
+      /**
+       * @alias equal
+       */
+
+      value: function eq() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        this.equal.apply(this, args);
+      }
+    },
     same: {
 
       /**
@@ -329,6 +343,20 @@ var MustBe = (function (_Wrapper3) {
         (_mustBeLessThan = mustBeLessThan).call.apply(_mustBeLessThan, [mustBeLessThan, this.value].concat(args));
       }
     },
+    lt: {
+
+      /**
+       * @alias lessThan
+       */
+
+      value: function lt() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        this.lessThan.apply(this, args);
+      }
+    },
     greaterThan: {
 
       /**
@@ -343,6 +371,20 @@ var MustBe = (function (_Wrapper3) {
         }
 
         (_mustBeGreaterThan = mustBeGreaterThan).call.apply(_mustBeGreaterThan, [mustBeGreaterThan, this.value].concat(args));
+      }
+    },
+    gt: {
+
+      /**
+       * @alias greaterThan
+       */
+
+      value: function gt() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        this.greaterThan.apply(this, args);
       }
     },
     instanceOf: {
@@ -397,6 +439,20 @@ var MustNotBe = (function (_Wrapper4) {
         (_mustNotBeEqual = mustNotBeEqual).call.apply(_mustNotBeEqual, [mustNotBeEqual, this.value].concat(args));
       }
     },
+    eq: {
+
+      /**
+       * @alias equal
+       */
+
+      value: function eq() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        this.equal.apply(this, args);
+      }
+    },
     same: {
 
       /**
@@ -445,6 +501,20 @@ var MustNotBe = (function (_Wrapper4) {
         (_mustNotBeLessThan = mustNotBeLessThan).call.apply(_mustNotBeLessThan, [mustNotBeLessThan, this.value].concat(args));
       }
     },
+    lt: {
+
+      /**
+       * @alias lessThan
+       */
+
+      value: function lt() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        this.lessThan.apply(this, args);
+      }
+    },
     greaterThan: {
 
       /**
@@ -459,6 +529,20 @@ var MustNotBe = (function (_Wrapper4) {
         }
 
         (_mustNotBeGreaterThan = mustNotBeGreaterThan).call.apply(_mustNotBeGreaterThan, [mustNotBeGreaterThan, this.value].concat(args));
+      }
+    },
+    gt: {
+
+      /**
+       * @alias greaterThan
+       */
+
+      value: function gt() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        this.greaterThan.apply(this, args);
       }
     },
     instanceOf: {

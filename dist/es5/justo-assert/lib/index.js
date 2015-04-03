@@ -109,6 +109,22 @@ var Must = (function (_Wrapper) {
         return new MustNot(this.value);
       }
     },
+    contain: {
+
+      /**
+       * Checks whether the wrapped collection contains an item. 
+       */
+
+      value: function contain() {
+        var _mustContain;
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        (_mustContain = mustContain).call.apply(_mustContain, [mustContain, this.value].concat(args));
+      }
+    },
     have: {
 
       /**
@@ -185,6 +201,22 @@ var MustNot = (function (_Wrapper2) {
 
       get: function () {
         return new MustNotBe(this.value);
+      }
+    },
+    contain: {
+
+      /**
+       * Checks whether the wrapped collection doesn't contain an item.
+       */
+
+      value: function contain() {
+        var _mustNotContain;
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        (_mustNotContain = mustNotContain).call.apply(_mustNotContain, [mustNotContain, this.value].concat(args));
       }
     },
     have: {
@@ -553,6 +585,24 @@ exports.mustBeLessThan = mustBeLessThan;
 exports.mustNotBeLessThan = mustNotBeLessThan;
 
 /**
+ * Checks whether a collection contains an item.
+ * 
+ * @param col:any				The collection.
+ * @param item:any			The item.
+ * @param [msg]:string	The message if error.
+ */
+exports.mustContain = mustContain;
+
+/**
+ * Checks whether a collection doesn't contain an item.
+ * 
+ * @param col:any				The collection.
+ * @param item:any			The item.
+ * @param [msg]:string	The message if error.
+ */
+exports.mustNotContain = mustNotContain;
+
+/**
  * Checks whether an object has specified properties.
  *
  * @overload
@@ -718,6 +768,18 @@ function mustBeLessThan(actual, expected, msg) {
 function mustNotBeLessThan(actual, expected, msg) {
   if (actual < expected) {
     throw new AssertionError("'" + actual + "' must not be less than '" + expected + "'.", msg);
+  }
+}
+
+function mustContain(col, item, msg) {
+  if (!((typeof col == "string" || col instanceof Array) && col.indexOf(item) >= 0)) {
+    throw new AssertionError("'" + col + "' must contain '" + item + "'.", msg);
+  }
+}
+
+function mustNotContain(col, item, msg) {
+  if ((typeof col == "string" || col instanceof Array) && col.indexOf(item) >= 0) {
+    throw new AssertionError("'" + col + "' must not contain '" + item + "'.", msg);
   }
 }
 

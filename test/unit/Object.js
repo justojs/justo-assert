@@ -46,6 +46,26 @@ describe("must<Object>", function() {
     });
   });
   
+  describe("#must.contain()", function() {
+  	it("contain(item) - must not", function() {
+  		(function() {
+  			user.must.contain("username");
+  		}).should.throwError(Error, {name: "AssertionError"});
+  	});
+  	
+  	it("contain(item, msg) - must not", function() {
+  		(function() {
+  			user.must.contain("username", "Custom message");
+  		}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+  	});
+  });
+  
+  describe("#must.not.contain()", function() {
+  	it("not.contain(item) - must", function() {
+  		user.must.not.contain("username");
+  	});
+  });
+  
   describe("#must.be.equal()", function() {
   	it("be.equal(string) - must not", function() {
   		(function() {

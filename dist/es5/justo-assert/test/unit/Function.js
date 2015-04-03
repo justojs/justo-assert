@@ -32,6 +32,26 @@ describe("must<Function>", function() {
     	fn.must.not.should.have.property("be");
     });
   });
+  
+  describe("#must.contain()", function() {
+  	it("contain(item) - must not", function() {
+  		(function() {
+  			fn.must.contain(1);
+  		}).should.throwError(Error, {name: "AssertionError"});
+  	});
+  	
+  	it("contain(item, msg) - must not", function() {
+  		(function() {
+  			fn.must.contain(1, "Custom message");
+  		}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+  	});
+  });
+  
+  describe("#must.not.contain()", function() {
+  	it("not.contain(item) - must", function() {
+  		fn.must.not.contain(1);
+  	});
+  });
 
   describe("#must.raise()", function() {
     describe("Error handling", function() {

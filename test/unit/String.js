@@ -42,6 +42,52 @@ describe("must<string>", function() {
       }).should.throwError(/is not a callable object/);
     });
   });
+  
+  describe("#must.contain()", function() {
+  	it("contain(item) - must (1st item)", function() {
+  		"abc".must.contain("a");
+  	});
+  	
+  	it("contain(item) - must (another item)", function() {
+  		"abc".must.contain("b");
+  	});
+  	
+  	it("contain(item) - must not", function() {
+  		(function() {
+  			"abc".must.contain("d");
+  		}).should.throwError(Error, {name: "AssertionError"});
+  	});
+  	
+  	it("contain(item, msg) - must not", function() {
+  		(function() {
+  			"abc".must.contain("d", "Custom message");
+  		}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+  	});
+  });
+  
+  describe("#must.not.contain()", function() {
+  	it("not.contain(item) - must", function() {
+  		"abc".must.not.contain("d");
+  	});
+  	
+  	it("not.contain(item) - must not (1st item)", function() {
+  		(function() {
+  			"abc".must.not.contain("a");
+  		}).should.throwError(Error, {name: "AssertionError"});
+  	});
+  	
+  	it("not.contain(item) - must not (another item)", function() {
+  		(function() {
+  			"abc".must.not.contain("b");
+  		}).should.throwError(Error, {name: "AssertionError"});
+  	});
+  	
+  	it("not.contain(item, msg) - must not", function() {
+  		(function() {
+  			"abc".must.not.contain("a", "Custom message");
+  		}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+  	});
+  });
 
   describe("#must.be.equal()", function() {
     it("be.equal(string) - must be", function() {

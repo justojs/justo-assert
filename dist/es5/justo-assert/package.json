@@ -16,13 +16,20 @@
     }
   ],
   "keywords": [
+    "assert",
+    "Assertion test",
+    "Assertion testing",
+    "JavaScript test",
+    "JavaScript testing",
     "Justo",
     "Justo.js",
-    "assert",
-    "test",
+    "justo-assert",
+    "Node.js test",
+    "Node.js testing",
+    "Test",
+    "Testing",
     "Unit test",
-    "JavaScript test",
-    "Node.js test"
+    "Unit testing"
   ],
   "bugs": {
     "url": "https://github.com/justojs/justo-assert/issues",

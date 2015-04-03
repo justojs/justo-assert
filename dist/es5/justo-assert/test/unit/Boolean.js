@@ -36,6 +36,26 @@ describe("must<boolean>", function() {
       }).should.throwError(/is not a callable object/);
     });
   });
+  
+  describe("#must.contain()", function() {
+  	it("contain(item) - must not", function() {
+  		(function() {
+  			true.must.contain("t");
+  		}).should.throwError(Error, {name: "AssertionError"});
+  	});
+  	
+  	it("contain(item, msg) - must not", function() {
+  		(function() {
+  			true.must.contain("t", "Custom message");
+  		}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+  	});
+  });
+  
+  describe("#must.not.contain()", function() {
+  	it("not.contain(item) - must", function() {
+  		true.must.not.contain("t");
+  	});
+  });
 
   describe("#must.be.equal()", function() {
     it("be.equal(boolean) - must", function() {

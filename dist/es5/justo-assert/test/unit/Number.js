@@ -40,6 +40,26 @@ describe("must<number>", function() {
       }).should.throwError(/is not a callable object/);
     });
   });
+  
+  describe("#must.contain()", function() {
+  	it("contain() - must not", function() {
+  		(function() {
+  			x.must.contain(x);
+  		}).should.throwError(Error, {name: "AssertionError"});
+  	});
+  	
+  	it("contain() - must not", function() {
+  		(function() {
+  			x.must.contain(x, "Custom message");
+  		}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+  	});
+  });
+  
+  describe("#must.not.contain()", function() {
+  	it("not.contain() - must", function() {
+  		x.must.not.contain(x);
+  	});
+  });
 
   describe("#must.be.equal()", function() {
     it("be.equal(number) - must", function() {

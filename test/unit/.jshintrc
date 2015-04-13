@@ -83,7 +83,12 @@
   // they are not described in the [JSHint Options documentation][4].
 
   "predef" : [ // Extra globals.
-
+    "describe",
+    "it",
+    "after",
+    "afterEach",
+    "before",
+    "beforeEach"
   ],
 
   "indent" : 2 // Specify indentation spacing

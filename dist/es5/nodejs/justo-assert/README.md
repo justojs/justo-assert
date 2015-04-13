@@ -2,7 +2,7 @@
 
 An assertion framework.
 
-Proudly developed in JavaScript (ES6) from Valencia, Spain.
+Proudly made in Valencia, Spain, EU.
 
 ## Install
 
@@ -175,3 +175,14 @@ fn.must.raise(Error);
 fn.must.raise(Error, ["arg1"]);
 fn.must.raise(Error, ["arg1", "arg2"]); 
 ``` 
+
+### must.not.raise()
+
+Checks whether a function call doesn't throw an error:
+
+```
+fn.must.not.raise();
+fn.must.not.raise(error);
+fn.must.not.raise(error, ["arg1"]);
+fn.must.not.raise(error, ["arg1", "arg2"]);
+```

@@ -97,7 +97,7 @@ describe("must<Object>", function() {
   	
   	it("be.equal(object) - must not", function() {
   		(function() {
-  			user.must.be.equal({uername: "USER", password: "pwd"})
+  			user.must.be.equal({uername: "USER", password: "pwd"});
   		}).should.throwError(Error, {name: "AssertionError"});
   	});
   	
@@ -379,6 +379,19 @@ describe("must<Object>", function() {
   				user.must.have({username: "user", password: "PWD"}, "Custom error message");
   			}).should.throwError(Error, {name: "AssertionError", message: "Custom error message"});
   		});
+  		
+  		it("have(props : object) with a value being an object - must", function() {
+        var o = {array: [1, 2, 3]};
+        o.must.have({array: [1, 2, 3]});
+  		});
+  		
+  		it("have(props : object) with a value being an object - must not", function() {
+  			var o = {array: [1, 2, 3]};
+  			
+  			(function() {
+  				o.must.have({array: [3, 2, 1]});
+  			}).should.throwError(Error, {name: "AssertionError"});
+  		});
   	});
   });
   
@@ -453,6 +466,19 @@ describe("must<Object>", function() {
   		it("not.have(props : Object, msg) - must not have", function() {
 				user.must.not.have({username: "USER", password: "PWD"}, "Custom error message");
   		});
+  		
+  		it("not.have(props : object) with a value being an object - must", function() {
+        var o = {array: [1, 2, 3]};
+        o.must.not.have({array: [3, 2, 1]});
+  		});
+  		
+  		it("not.have(props : object) with a value being an object - must not", function() {
+  			var o = {array: [1, 2, 3]};
+  			
+  			(function() {
+  				o.must.not.have({array: [1, 2, 3]});
+  			}).should.throwError(Error, {name: "AssertionError"});
+  		});
   	});
   });
   
@@ -475,7 +501,7 @@ describe("must<Object>", function() {
   	
   	it("haveAny(props : string[]) - must not have", function() {
   		(function() {
-  			user.must.haveAny(["user", "usr"])
+  			user.must.haveAny(["user", "usr"]);
   		}).should.throwError(Error, {name: "AssertionError"});
   	});
   	
@@ -520,5 +546,18 @@ describe("must<Object>", function() {
   			user.must.haveAny({name: "user", user: "user"}, "Custom error message");
   		}).should.throwError(Error, {name: "AssertionError", message: "Custom error message"});
   	});
+  	
+  	it("haveAny(props : object) with a value being an object - must", function() {
+      var o = {a: 1, b: 2, c: [1, 2], d: 3};
+      o.must.haveAny({c: [1, 2]});
+		});
+		
+		it("haveAny(props : object) with a value being an object - must not", function() {
+			var o = {a: 1, b: 2, c: [1, 2], d: 3};
+			
+			(function() {
+				o.must.haveAny({c: [2, 1]});
+			}).should.throwError(Error, {name: "AssertionError"});
+		});
   });
 });

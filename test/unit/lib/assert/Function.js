@@ -1,6 +1,6 @@
 describe("must<Function>", function() {
-  function fn() {};
-  function raise(msg) { throw new Error(msg); };
+  function fn() {}
+  function raise(msg) { throw new Error(msg); }
   function nonraise() { }
   
   describe("#must", function() {
@@ -8,28 +8,44 @@ describe("must<Function>", function() {
       fn.should.have.property("must");
     });
     
+    it("must.not", function() {
+    	fn.must.should.have.property("not");
+    });
+    
     it("must.be", function() {
     	fn.must.should.have.property("be");
+    });
+    
+    it("must.not.be", function() {
+    	fn.must.not.should.have.property("be");
+    });
+    
+    it("must.contain", function() {
+    	fn.must.should.have.property("contain");
+    });
+    
+    it("must.not.contain", function() {
+    	fn.must.not.should.have.property("contain");
     });
     
     it("must.have", function() {
     	fn.must.should.have.property("have");
     });
     
-    it("must.haveAny", function() {
-    	fn.must.should.have.property("haveAny");
-    });
-    
-    it("must.not", function() {
-    	fn.must.should.have.property("not");
-    });
-    
     it("must.not.have", function() {
     	fn.must.not.should.have.property("have");
     });
     
-    it("must.not.be", function() {
-    	fn.must.not.should.have.property("be");
+    it("must.haveAny", function() {
+    	fn.must.should.have.property("haveAny");
+    });
+    
+    it("must.raise", function() {
+    	fn.must.should.have.property("raise");
+    });
+    
+    it("must.not.raise", function() {
+    	fn.must.not.should.have.property("raise");
     });
   });
   
@@ -54,27 +70,19 @@ describe("must<Function>", function() {
   });
 
   describe("#must.raise()", function() {
-    describe("Error handling", function() {
-      it("raise(fn : !Function)", function() {
-	      (function() {
-	        fn.must.raise();
-	      }).should.throwError(/expected to throw/);
-      });
-    });
-	
-    describe("#must.raise()", function() {
+    describe("must.raise()", function() {
       it("raise() - must", function() {
         raise.must.raise();
       });
       
       it("raise() - must not", function() {
       	(function() {
-      		nonraise.must.raise()
+      		nonraise.must.raise();
       	}).should.throwError(Error, {name: "AssertionError"});
       });
     });
 
-    describe("raise(arguments [, msg])", function() {
+    describe("raise(args [, msg])", function() {
       it("raise(args) - must", function() {
         raise.must.raise(["Arg1", "Arg2"]);
       });
@@ -91,93 +99,391 @@ describe("must<Function>", function() {
       
       it("raise(args, msg) - must not", function() {
       	(function() {
-      		nonraise.must.raise(["Arg1", "Arg2"], "Custom message")
+      		nonraise.must.raise(["Arg1", "Arg2"], "Custom message");
       	}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
       });
     });
+    
+    describe("raise(error : string, ...args)", function() {
+	    describe("raise(error : string [, msg])", function() {
+	    	it("raise(error : string) - must", function() {
+	      	raise.must.raise("");
+	      });
+	      
+	      it("raise(error : string) - must not", function() {
+	      	(function() {
+	      		nonraise.must.raise("Error message");
+	      	}).should.throwError(Error, {name: "AssertionError"});
+	      });
+	      
+	      it("raise(error : string) with different message - must not", function() {
+	      	(function() {
+	      		raise.must.raise("x");
+	      	}).should.throwError(Error, {name: "AssertionError"});
+	      });
+	      
+	      it("raise(error : string, msg) - must", function() {
+	        raise.must.raise("", "Custom message");
+	      });
+	      
+	      it("raise(error : string, msg) - must not", function() {
+	      	(function() {
+	      		nonraise.must.raise("", "Custom message");
+	      	}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+	      });
+	      
+	      it("raise(error : string, msg) with different message - must not", function() {
+	      	(function() {
+	      		nonraise.must.raise("x", "Custom message");
+	      	}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+	      });
+	    });
+	    
+	    describe("raise(error : string, args [, msg]", function() {
+	    	it("raise(error : string, args) - must", function() {
+	    		raise.must.raise("Error message", ["Error message", "Arg2"]);
+	    	});
+	    	
+	    	it("raise(error : string, args) - must not", function() {
+	    		(function() {
+	    			nonraise.must.raise("Error message", ["Other errror message"]);
+	    		}).should.throwError(Error, {name: "AssertionError"});
+	    	});
+	    	
+	    	it("raise(error : string, args, msg) - must", function() {
+	    		raise.must.raise("Error message", ["Error message", "Arg2"], "Custom message");
+	    	});
+	    	
+	    	it("raise(error : Error, args, msg) - must not", function() {
+	    		(function() {
+	    			nonraise.must.raise("Error message", ["Other error message"], "Custom message");
+	    		}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+	    	});
+	    });
+    });
+    
+    describe("raise(error : class, ...args)", function() {
+    	function MyError() {}
+    	
+      describe("raise(error : class [, msg])", function() {
+        it("raise(error : class) - must", function() {
+        	raise.must.raise(Error);
+        });
+        
+        it("raise(error : class) - must not", function() {
+        	(function() {
+        		nonraise.must.raise(Error);
+        	}).should.throwError(Error, {name: "AssertionError"});
+        });
+        
+        it("raise(error : class) with different class - must not", function() {
+        	(function() {
+        		raise.must.raise(function MyError() {});
+        	}).should.throwError(Error, {name: "AssertionError"});
+        });
 
-    describe("raise(error [, msg])", function() {
-      it("raise(error : Error) -must", function() {
-      	raise.must.raise(Error);
+        it("raise(error : class, msg) - must", function() {
+          raise.must.raise(Error, "Custom message");
+        });
+        
+        it("raise(error : class, msg) - must not", function() {
+        	(function() {
+        		nonraise.must.raise(Error, "Custom message");
+        	}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+        });
+        
+        it("raise(error : class, msg) with different class - must not", function() {
+        	(function() {
+        		nonraise.must.raise(function MyError() {}, "Custom message");
+        	}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+        });
       });
       
-      it("raise(error : Error) - must not", function() {
+      describe("raise(error : class, args [, msg])", function() {
+      	it("raise(error : Error, args) - must", function() {
+      		raise.must.raise(Error, ["Arg1"]);
+      	});
+      	
+      	it("raise(error : Error, args) - must not", function() {
+      		(function() {
+      			nonraise.must.raise(MyError, ["Arg1"]);
+      		}).should.throwError(Error, {name: "AssertionError"});
+      	});
+      	
+      	it("raise(error : Error, args, msg) - must", function() {
+      		raise.must.raise(Error, ["Arg1"], "Custom message");
+      	});
+      	
+      	it("raise(error : Error, args, msg) - must not", function() {
+      		(function() {
+      			nonraise.must.raise(MyError, ["Arg1"], "Custom message");
+      		}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+      	});
+      });
+    });
+    
+    describe("raise(error : object, ...args)", function() {
+    	function raise() {
+    		throw {msg: "My message"};
+    	}
+    	
+	    describe("raise(error : object [, msg])", function() {
+	    	it("raise(error : object) - must", function() {
+	    		raise.must.raise({msg: "My message"});
+	    	});
+	    	
+	    	it("rtaise(error : object) - must not", function() {
+	    		(function() {
+	    			nonraise.must.raise({msg: "My message"});
+	    		}).should.throwError(Error, {name: "AssertionError"});
+	    	});
+	    	
+	    	it("raise(error : object) with different content - must not", function() {
+	    		(function() {
+	    			raise.must.raise({msg: "x"});
+	    		}).should.throwError(Error, {name: "AssertionError"});
+	    	});
+	    	
+	    	it("raise(error : object, msg) - must not", function() {
+	    		(function() {
+	    			raise.must.raise({msg: "x"}, "Custom message");
+	    		}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+	    	});
+	    });
+	    
+	    describe("raise(error : object, args [, msg])", function() {
+	    	it("raise(error : object, args) - must", function() {
+	    		raise.must.raise({msg: "My message"}, [1, 2, 3]);
+	    	});
+	    	
+	    	it("raise(error : object, args) - must not", function() {
+	    		(function() {
+	    			nonraise.must.raise({msg: "My message"}, [1, 2, 3]);
+	    		}).should.throwError(Error, {name: "AssertionError"});
+	    	});
+	    	
+	    	it("raise(error : object, args) with different message - must not", function() {
+	    		(function() {
+	    			raise.must.raise({msg: "x"}, [1, 2, 3]);
+	    		}).should.throwError(Error, {name: "AssertionError"});
+	    	});
+	    	
+	    	it("raise(error : object, args, msg) - must", function() {
+	    		raise.must.raise({msg: "My message"}, [1, 2, 3], "Custom message");
+	    	});
+	    	
+	    	it("raise(error : object, args, msg) - must not", function() {
+	    		(function() {
+	    			raise.must.raise({msg: "x"}, [1, 2, 3], "Custom message");
+	    		}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+	    	});
+	    });
+    });
+	});
+  
+  describe("#must.not.raise()", function() {
+    describe("not.raise()", function() {
+      it("not.raise() - must", function() {
+        nonraise.must.not.raise();
+      });
+      
+      it("not.raise() - must not", function() {
       	(function() {
-      		nonraise.must.raise(Error)
+      		raise.must.not.raise();
       	}).should.throwError(Error, {name: "AssertionError"});
       });
+    });
 
-      it("raise(error : string) - must", function() {
-      	raise.must.raise("");
+    describe("not.raise(args [, msg])", function() {
+      it("not.raise(args) - must", function() {
+        nonraise.must.not.raise(["Arg1", "Arg2"]);
       });
       
-      it("raise(error : string) - must not", function() {
+      it("not.raise(args) - must not", function() {
       	(function() {
-      		nonraise.must.raise("")
+      		raise.must.not.raise(["Arg1", "Arg2"]);
       	}).should.throwError(Error, {name: "AssertionError"});
       });
-
-      it("raise(error : Error, msg) - must", function() {
-        raise.must.raise(Error, "Custom message");
+    
+      it("not.raise(args, msg) - must", function() {
+        nonraise.must.not.raise(["Arg1", "Arg2"], "Custom message");
       });
       
-      it("raise(error : Error, msg) - must not", function() {
+      it("not.raise(args, msg) - must not", function() {
       	(function() {
-      		nonraise.must.raise(Error, "Custom message")
-      	}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
-      });
-
-      it("raise(error : string, msg) - must", function() {
-        raise.must.raise("", "Custom message");
-      });
-      
-      it("raise(error : string, msg) - must not", function() {
-      	(function() {
-      		nonraise.must.raise("", "Custom message");
+      		raise.must.not.raise(["Arg1", "Arg2"], "Custom message");
       	}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
       });
     });
-     
-    describe("raise(error, args [, msg]", function() {
-    	it("raise(error : Error, args) - must", function() {
-    		raise.must.raise(Error, ["Arg1"]);
-    	});
+    
+    describe("not.raise(error : string, ...args)", function() {
+	    describe("not.raise(error : string [, msg])", function() {
+	    	it("not.raise(error : string) - must", function() {
+	      	nonraise.must.not.raise("");
+	      });
+	      
+	      it("not.raise(error : string) - must not", function() {
+	      	(function() {
+	      		raise.must.not.raise("");
+	      	}).should.throwError(Error, {name: "AssertionError"});
+	      });
+	      
+	      it("not.raise(error : string) with different message - must", function() {
+      		raise.must.not.raise("x");
+	      });
+	      
+	      it("not.raise(error : string, msg) - must", function() {
+	        nonraise.must.not.raise("", "Custom message");
+	      });
+	      
+	      it("not.raise(error : string, msg) - must not", function() {
+	      	(function() {
+	      		raise.must.not.raise("", "Custom message");
+	      	}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+	      });
+	      
+	      it("not.raise(error : string, msg) with different message - must not", function() {
+	      	raise.must.not.raise("x", "Custom message");
+	      });
+	    });
+	    
+	    describe("not.raise(error : string, args [, msg]", function() {
+	    	it("not.raise(error : string, args) - must", function() {
+	    		nonraise.must.not.raise("Error message", ["Arg1", "Arg2"]);
+	    	});
+	    	
+	    	it("not.raise(error : string, args) - must not", function() {
+	    		(function() {
+	    			raise.must.not.raise("Error message", ["Error message", "Arg2"]);
+	    		}).should.throwError(Error, {name: "AssertionError"});
+	    	});
+	    	
+	    	it("not.raise(error : string, args, msg) - must", function() {
+	    		nonraise.must.not.raise("Error message", ["Error message", "Arg2"], "Custom message");
+	    	});
+	    	
+	    	it("not.raise(error : string, args, msg) with different message - must", function() {
+	    		raise.must.not.raise("My error message", ["Error message", "Arg2"], "Custom message");
+	    	});
+	    	
+	    	it("not.raise(error : string, args, msg) - must not", function() {
+	    		(function() {
+	    			raise.must.not.raise("Error message", ["Error message"], "Custom message");
+	    		}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+	    	});
+	    });
+    });
+    
+    describe("not.raise(error : class, ...args)", function() {
+    	function MyError() {}
     	
-    	it("raise(error : Error, args) - must not", function() {
-    		(function() {
-    			nonraise.must.raise(Error, ["Arg1"]);
-    		}).should.throwError(Error, {name: "AssertionError"});
-    	});
+      describe("not.raise(error : class [, msg])", function() {
+        it("not.raise(error : class) - must", function() {
+        	nonraise.must.not.raise(Error);
+        });
+        
+        it("not.raise(error : class) - must not", function() {
+        	(function() {
+        		raise.must.not.raise(Error);
+        	}).should.throwError(Error, {name: "AssertionError"});
+        });
+        
+        it("not.raise(error : class) with different class - must", function() {
+      		raise.must.not.raise(MyError);
+        });
+
+        it("not.raise(error : class, msg) - must", function() {
+          nonraise.must.not.raise(Error, "Custom message");
+        });
+        
+        it("not.raise(error : class, msg) - must not", function() {
+        	(function() {
+        		raise.must.not.raise(Error, "Custom message");
+        	}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+        });
+        
+        it("not.raise(error : class, msg) with different class - must", function() {
+      		nonraise.must.not.raise(MyError, "Custom message");
+        });
+      });
+      
+      describe("not.raise(error : class, args [, msg])", function() {
+      	it("not.raise(error : class, args) - must", function() {
+      		nonraise.must.not.raise(Error, ["Arg1"]);
+      	});
+      	
+      	it("not.raise(error : class, args) - must not", function() {
+      		(function() {
+      			raise.must.not.raise(Error, ["Arg1"]);
+      		}).should.throwError(Error, {name: "AssertionError"});
+      	});
+      	
+      	it("not.raise(error : class, args) with different class - must", function() {
+      		raise.must.not.raise(MyError, ["Arg1"]);
+      	});
+      	
+      	it("not.raise(error : class, args, msg) - must not", function() {
+      		(function() {
+      			raise.must.not.raise(Error, ["Arg1"], "Custom message");
+      		}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+      	});
+      	
+      	it("not.raise(error : class, args, msg) - must", function() {
+    			nonraise.must.not.raise(Error, ["Arg1"], "Custom message");
+      	});
+      });
+    });
+    
+    describe("not.raise(error : object, ...args)", function() {
+    	function raise() {
+    		throw {msg: "My message"};
+    	}
     	
-    	it("raise(error : Error, args, msg) - must", function() {
-    		raise.must.raise(Error, ["Arg1"], "Custom message");
-    	});
-    	
-    	it("raise(error : Error, args, msg) - must not", function() {
-    		(function() {
-    			nonraise.must.raise(Error, ["Arg1"], "Custom message");
-    		}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
-    	});
-    	
-    	it("raise(error : string, args) - must", function() {
-    		raise.must.raise("Error", ["Error", "Arg2"]);
-    	});
-    	
-    	it("raise(error : string, args) - must not", function() {
-    		(function() {
-    			nonraise.must.raise("Error", ["Arg1"]);
-    		}).should.throwError(Error, {name: "AssertionError"});
-    	});
-    	
-    	it("raise(error : string, args, msg) - must", function() {
-    		raise.must.raise("Error", ["Error", "Arg2"], "Custom message");
-    	});
-    	
-    	it("raise(error : Error, args, msg) - must not", function() {
-    		(function() {
-    			nonraise.must.raise("Error", ["Arg1"], "Custom message");
-    		}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
-    	});
+	    describe("not.raise(error : object [, msg])", function() {
+	    	it("not.raise(error : object) - must", function() {
+	    		nonraise.must.not.raise({msg: "My message"});
+	    	});
+	    	
+	    	it("not.raise(error : object) - must not", function() {
+	    		(function() {
+	    			raise.must.not.raise({msg: "My message"});
+	    		}).should.throwError(Error, {name: "AssertionError"});
+	    	});
+	    	
+	    	it("not.raise(error : object) with different content - must", function() {
+    			raise.must.not.raise({msg: "x"});
+	    	});
+	    });
+	    
+	    describe("not.raise(error : object, args [, msg])", function() {
+	    	it("not.raise(error : object, args) - must", function() {
+	    		nonraise.must.not.raise({msg: "My message"}, [1, 2, 3]);
+	    	});
+	    	
+	    	it("not.raise(error : object, args) - must not", function() {
+	    		(function() {
+	    			raise.must.not.raise({msg: "My message"}, [1, 2, 3]);
+	    		}).should.throwError(Error, {name: "AssertionError"});
+	    	});
+	    	
+	    	it("not.raise(error : object, args) with different message - must", function() {
+    			raise.must.not.raise({msg: "x"}, [1, 2, 3]);
+	    	});
+	    	
+	    	it("not.raise(error : object, args, msg) - must", function() {
+	    		nonraise.must.not.raise({msg: "My message"}, [1, 2, 3], "Custom message");
+	    	});
+
+	    	it("not.raise(error : object, args, msg) with different object - must", function() {
+	    		raise.must.not.raise({msg: "x"}, [1, 2, 3], "Custom message");
+	    	});
+	    	
+	    	it("not.raise(error : object, args, msg) - must not", function() {
+	    		(function() {
+	    			raise.must.not.raise({msg: "My message"}, [1, 2, 3], "Custom message");
+	    		}).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+	    	});
+	    });
     });
 	});
 
@@ -584,7 +890,7 @@ describe("must<Function>", function() {
   	
   	it("haveAny(props : string[]) - must not", function() {
   		(function() {
-  			fn.must.haveAny(["user", "usr"])
+  			fn.must.haveAny(["user", "usr"]);
   		}).should.throwError(Error, {name: "AssertionError"});
   	});
   	

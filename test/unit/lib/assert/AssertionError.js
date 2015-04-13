@@ -8,7 +8,7 @@ describe("AssertionError", function() {
 		describe("Error handling", function() {
 			it("constuctor()", function() {
 				(function() {
-					new AssertionError();
+					var error = new AssertionError();
 				}).should.throwError(Error, {name: "Error", message: "Error message expected."});
 			});
 		});

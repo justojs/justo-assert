@@ -19,10 +19,7 @@ module.exports = function(grunt) {
 
       es5: {
         files: {
-          "build/es5/lib/assert.js": "lib/assert.js",
-          "build/es5/lib/AssertionError.js": "lib/AssertionError.js",
-          "build/es5/lib/init.js": "lib/init.js",
-          "build/es5/lib/Must.js": "lib/Must.js"
+        	"build/es5/lib/index.js": "build/es5/lib/index.js"
         }
       }
     },
@@ -37,18 +34,19 @@ module.exports = function(grunt) {
       options: {
         separator: "\n\n"
       },
-
-      es5: {
-        src: ["build/es5/lib/**"],
-        dest: "dist/es5/<%= pkg.name %>/lib/index.js"
+      
+      preCompiler: {
+      	src: ["lib/assert/*.*", "lib/main.js"],
+      	dest: "build/es5/lib/index.js"
       }
     },
     
     copy: {
-    	es5: {
+    	nodejs: {
     		files: [
-    		  {src: ["package.json", "README.md"], dest: "dist/es5/<%= pkg.name %>/", expand: true},
-    		  {src: ["test/**/*.*"], dest: "dist/es5/<%= pkg.name %>", expand: true}
+    		  {cwd: "build/es5/", src: ["lib/index.js"], dest: "dist/es5/nodejs/<%= pkg.name %>/", expand: true},
+    		  {src: ["package.json", "README.md"], dest: "dist/es5/nodejs/<%= pkg.name %>/", expand: true},
+    		  {src: ["test/**/*.*"], dest: "dist/es5/nodejs/<%= pkg.name %>", expand: true}
     		]
     	}
     },
@@ -68,6 +66,7 @@ module.exports = function(grunt) {
 
       test: {
         options: {
+        	jshintrc: true,
           ignores: [
             "test/mocha.opts"
           ]
@@ -95,7 +94,7 @@ module.exports = function(grunt) {
         },
 
         src: [
-          "test/unit/*.js"
+          "test/unit/**/*.js"
         ]
       }
     }
@@ -112,7 +111,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-mocha-test");
   
   //aliases
-  grunt.registerTask("buildes5", ["clean:es5", "babel:es5", "concat:es5", "copy:es5"]);
+  grunt.registerTask("buildes5", ["jshint", "clean:es5", "concat:preCompiler", "babel:es5", "copy:nodejs"]);
   grunt.registerTask("es5", ["buildes5", "mochaTest:es5"]);
 
   // Default task

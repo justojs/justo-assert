@@ -359,7 +359,7 @@ describe("must<string>", function() {
     it("be.instanceOf(function) - must not", function() {
     	(function() {
     		"".must.be.instanceOf(Function);
-    	}).should.throwError(Error, {name: "AssertionError"})
+    	}).should.throwError(Error, {name: "AssertionError"});
     });
 
     it("instanceOf(object) - must not", function() {

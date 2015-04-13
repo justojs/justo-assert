@@ -1,7 +1,7 @@
 {
   "name": "justo-assert",
-  "version": "0.3.0",
-  "description": "An assertion framework.",
+  "version": "0.4.0",
+  "description": "An assertion library.",
   "homepage": "http://www.justojs.org",
   "author": {
     "name": "Justo.js Development Group",

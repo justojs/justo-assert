@@ -68,55 +68,55 @@ exports.mustNotBeBetween = mustNotBeBetween;
 
 /**
  * Checks whether a value is greater than another.
- * 
- * @param actual:any		The value.
- * @param expected:any	The lowerbound exclusive.
- * @param [msg]:string	The message if error.
+ *
+ * @param actual:any    The value.
+ * @param expected:any  The lowerbound exclusive.
+ * @param [msg]:string  The message if error.
  */
 exports.mustBeGreaterThan = mustBeGreaterThan;
 
 /**
  * Checks whether a value is not greater than another.
- * 
- * @param actual:any		The value.
- * @param expected:any	The lowerbound exclusive.
- * @param [msg]:string	The message if error.
+ *
+ * @param actual:any    The value.
+ * @param expected:any  The lowerbound exclusive.
+ * @param [msg]:string  The message if error.
  */
 exports.mustNotBeGreaterThan = mustNotBeGreaterThan;
 
 /**
  * Checks whether a value is less than another.
- * 
- * @param actual:any		The value.
- * @param expected:any	The upperbound exclusive.
- * @param [msg]:string	The message if error.
+ *
+ * @param actual:any    The value.
+ * @param expected:any  The upperbound exclusive.
+ * @param [msg]:string  The message if error.
  */
 exports.mustBeLessThan = mustBeLessThan;
 
 /**
  * Checks whether a value is not less than another.
- * 
- * @param actual:any		The value.
- * @param expected:any	The upperbound exclusive.
- * @param [msg]:string	The message if error.
+ *
+ * @param actual:any    The value.
+ * @param expected:any  The upperbound exclusive.
+ * @param [msg]:string  The message if error.
  */
 exports.mustNotBeLessThan = mustNotBeLessThan;
 
 /**
  * Checks whether a collection contains an item.
- * 
- * @param col:any				The collection.
- * @param item:any			The item.
- * @param [msg]:string	The message if error.
+ *
+ * @param col:any        The collection.
+ * @param item:any      The item.
+ * @param [msg]:string  The message if error.
  */
 exports.mustContain = mustContain;
 
 /**
  * Checks whether a collection doesn't contain an item.
- * 
- * @param col:any				The collection.
- * @param item:any			The item.
- * @param [msg]:string	The message if error.
+ *
+ * @param col:any        The collection.
+ * @param item:any      The item.
+ * @param [msg]:string  The message if error.
  */
 exports.mustNotContain = mustNotContain;
 
@@ -226,18 +226,30 @@ exports.mustNotRaise = mustNotRaise;
 /**
  * Checks whether a value is instance of a given class.
  *
+ * @overload
  * @param obj:any       The value to check.
  * @param clss:class    The class object.
- * @param [msg]:string  The message if error.
+ * @param [msg]:string  The assertion message.
+ *
+ * @overload
+ * @param obj:any        The value to check.
+ * @param clss:string    The class name.
+ * @param [msg]:string  The assertion message.
  */
 exports.mustBeInstanceOf = mustBeInstanceOf;
 
 /**
  * Checks whether a value is not an instance of a given class.
  *
+ * @overload
  * @param obj:any       The value to check.
  * @param clss:class    The class object.
- * @param [msg]:string  The message if error.
+ * @param [msg]:string  The assertion message.
+ *
+ * @overload
+ * @param obj:any        The value to check.
+ * @param clss:string    The class name.
+ * @param [msg]:string  The assertion message.
  */
 exports.mustNotBeInstanceOf = mustNotBeInstanceOf;
 Object.defineProperty(exports, "__esModule", {
@@ -330,7 +342,7 @@ var Must = (function (_Wrapper) {
     contain: {
 
       /**
-       * Checks whether the wrapped collection contains an item. 
+       * Checks whether the wrapped collection contains an item.
        */
 
       value: function contain() {
@@ -1058,7 +1070,12 @@ function mustBeInstanceOf(obj, clss, msg) {
   var err;
 
   //(1) check
-  if (clss === String) err = typeof obj != "string";else if (clss === Number) err = typeof obj != "number";else if (clss === Boolean) err = typeof obj != "boolean";else err = !(obj instanceof clss);
+  if (typeof clss == "string") {
+    err = obj.constructor.name != clss;
+    clss = { name: clss };
+  } else {
+    if (clss === String) err = typeof obj != "string";else if (clss === Number) err = typeof obj != "number";else if (clss === Boolean) err = typeof obj != "boolean";else err = !(obj instanceof clss);
+  }
 
   //(2) throw error if needed
   if (err) {
@@ -1072,7 +1089,12 @@ function mustNotBeInstanceOf(obj, clss, msg) {
   var err;
 
   //(1) check
-  if (clss === String) err = typeof obj == "string";else if (clss === Number) err = typeof obj == "number";else if (clss === Boolean) err = typeof obj == "boolean";else err = obj instanceof clss;
+  if (typeof clss == "string") {
+    err = obj.constructor.name == clss;
+    clss = { name: clss };
+  } else {
+    if (clss === String) err = typeof obj == "string";else if (clss === Number) err = typeof obj == "number";else if (clss === Boolean) err = typeof obj == "boolean";else err = obj instanceof clss;
+  }
 
   //(2) throw error if needed
   if (err) {

@@ -1,10 +1,10 @@
 {
   "name": "justo-assert",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "An assertion library.",
   "homepage": "http://www.justojs.org",
   "author": {
-    "name": "Justo.js Development Group",
+    "name": "The Justo.js Development Group",
     "email": "justojs.org@outlook.com",
     "url": "http://www.justojs.org"
   },

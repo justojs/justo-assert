@@ -47,7 +47,7 @@
   ],
   "bin": {},
   "engines": {
-    "node": "*"
+    "node": ">=0.12.0"
   },
   "dependencies": {},
   "peerDependencies": {},
@@ -61,7 +61,11 @@
     "grunt-contrib-jshint": "*",
     "grunt-contrib-uglify": "*",
     "grunt-mocha-test": "*",
+    "grunt-travis-lint": "0.0.3",
     "mocha": "*",
     "should": "*"
+  },
+  "scripts": {
+    "test": "grunt mochaTest:es5"
   }
 }

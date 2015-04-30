@@ -766,18 +766,15 @@ var MustNotBe = (function (_Wrapper4) {
 
 //imports
 var assert = require("assert");
+var deepEqual = require("deep-equal");
 function mustBeEqual(actual, expected, msg) {
-  try {
-    assert.deepEqual(actual, expected);
-  } catch (e) {
+  if (!deepEqual(actual, expected)) {
     throw new AssertionError("'" + actual + "' must be equal to '" + expected + "'.", msg);
   }
 }
 
 function mustNotBeEqual(actual, expected, msg) {
-  try {
-    assert.notDeepEqual(actual, expected);
-  } catch (e) {
+  if (deepEqual(actual, expected)) {
     throw new AssertionError("'" + actual + "' must not be equal to '" + expected + "'.", msg);
   }
 }
@@ -868,10 +865,7 @@ function mustHave(obj, props, msg) {
       var _name2 = keys[i];
       var value = props[_name2];
 
-      try {
-        if (!obj.hasOwnProperty(_name2)) throw new Error();
-        assert.deepEqual(obj[_name2], value);
-      } catch (e) {
+      if (!obj.hasOwnProperty(_name2) || !deepEqual(obj[_name2], value)) {
         throw new AssertionError("" + obj + " must have property " + _name2 + "=" + value + ".", msg);
       }
     }
@@ -906,26 +900,31 @@ function mustNotHave(obj, props, msg) {
 }
 
 function mustHaveAny(obj, props, msg) {
+  var res;
+
+  //(1) check
+  res = false;
+
   if (props instanceof Array) {
     if (props.length > 0) {
       for (var i = 0; i < props.length; ++i) {
         if (obj.hasOwnProperty(props[i])) {
-          return;
+          res = true;
+          break;
         }
       }
     }
   } else {
     for (var _name in props) {
-      try {
-        if (obj.hasOwnProperty(_name)) {
-          assert.deepEqual(obj[_name], props[_name]);
-          return;
-        }
-      } catch (e) {}
+      if (obj.hasOwnProperty(_name) && deepEqual(obj[_name], props[_name])) {
+        res = true;
+        break;
+      }
     }
   }
 
-  throw new AssertionError("" + obj + " must have any property of " + props + ".", msg);
+  //(2) return
+  if (!res) throw new AssertionError("" + obj + " must have any property of " + props + ".", msg);
 }
 
 function mustRaise(fn) {
@@ -987,9 +986,7 @@ function mustRaise(fn) {
           throw new AssertionError("'" + fn.name + "' expected to throw error instance of '" + error.name + "'.", msg);
         }
       } else {
-        try {
-          assert.deepEqual(thrown, error);
-        } catch (e) {
+        if (!deepEqual(thrown, error)) {
           throw new AssertionError("'" + fn.name + "' expected to throw error object '" + error + "'.", msg);
         }
       }
@@ -1115,5 +1112,3 @@ Object.prototype.__defineGetter__("must", function () {
 String.prototype.__defineGetter__("must", function () {
   return new Must(this);
 });
-
-//pass

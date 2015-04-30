@@ -1,12 +1,12 @@
-# justo-assert
+[![Build Status](https://travis-ci.org/JustoJS/justo-assert.svg)](https://travis-ci.org/JustoJS/justo-assert)
 
 An assertion framework.
 
-Proudly made in Valencia, Spain, EU.
+*Proudly made in Valencia, Spain, EU.*
 
 ## Install
 
-`npm install justo-assert` 
+`npm install justo-assert`
 
 ## Assertions
 
@@ -69,7 +69,7 @@ Checks whether a value is less than another:
 ```
 x.must.be.lessThan(y);
 x.must.be.lt(y);
-``` 
+```
 
 ### must.not.be.lessThan() and must.not.be.lt()
 
@@ -150,8 +150,7 @@ user.must.haveAny({username: "usr", password: "pwd"});
 Checks whether the type of a value is the specified one:
 
 ```
-x.must.be.instanceOf(String);
-x.must.be.instanceOf(Number);
+x.must.be.instanceOf("Address");
 x.must.be.instanceOf(Address);
 ```
 
@@ -160,8 +159,7 @@ x.must.be.instanceOf(Address);
 Checks whether the type of a value is not the specified one:
 
 ```
-x.must.not.be.instanceOf(String);
-x.must.not.be.instanceOf(Number);
+x.must.not.be.instanceOf("Address");
 x.must.not.be.instanceOf(Address);
 ```
 
@@ -173,8 +171,8 @@ Checks whether a function call throws an error:
 fn.must.raise();
 fn.must.raise(Error);
 fn.must.raise(Error, ["arg1"]);
-fn.must.raise(Error, ["arg1", "arg2"]); 
-``` 
+fn.must.raise(Error, ["arg1", "arg2"]);
+```
 
 ### must.not.raise()
 

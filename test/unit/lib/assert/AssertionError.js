@@ -1,6 +1,6 @@
 //imports
 const assert = require("assert");
-const AssertionError = require("justo-assert").AssertionError;
+const AssertionError = require("../../../../dist/es5/nodejs/justo-assert").AssertionError;
 
 //suite
 describe("AssertionError", function() {

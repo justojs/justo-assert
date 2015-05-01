@@ -69,6 +69,50 @@ describe("must<Function>", function() {
     });
   });
 
+  describe("#must.be.in()", function() {
+    it("be.in(array) - pass", function() {
+      fn.must.be.in([fn]);
+    });
+
+    it("be.in(array) - fail", function() {
+      (function() {
+        fn.must.be.in([]);
+      }).should.throwError(Error, {name: "AssertionError"});
+    });
+
+    it("be.in(array, msg) - pass", function() {
+      fn.must.be.in([fn], "Custom message");
+    });
+
+    it("be.in(array, msg) - fail", function() {
+      (function() {
+        fn.must.be.in([], "Custom message");
+      }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+    });
+  });
+
+  describe("#must.not.be.in()", function() {
+    it("not.be.in(array) - pass", function() {
+      fn.must.not.be.in([]);
+    });
+
+    it("not.be.in(array) - fail", function() {
+      (function() {
+        fn.must.not.be.in([fn]);
+      }).should.throwError(Error, {name: "AssertionError"});
+    });
+
+    it("not.be.in(array, msg) - pass", function() {
+      fn.must.not.be.in([], "Custom message");
+    });
+
+    it("not.be.in(array, msg) - fail", function() {
+      (function() {
+        fn.must.not.be.in([fn], "Custom message");
+      }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+    });
+  });
+
   describe("#must.raise()", function() {
     describe("must.raise()", function() {
       it("raise() - must", function() {

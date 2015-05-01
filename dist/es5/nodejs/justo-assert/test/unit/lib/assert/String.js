@@ -89,6 +89,80 @@ describe("must<string>", function() {
     });
   });
 
+  describe("#must.be.in()", function() {
+    it("be.in(string) - pass", function() {
+      "sub".must.be.in("asubstr");
+    });
+
+    it("be.in(array) - pass", function() {
+      "sub".must.be.in(["sub"]);
+    });
+
+    it("be.in(string) - fail", function() {
+      (function() {
+        "sub".must.be.in("");
+      }).should.throwError(Error, {name: "AssertionError"});
+    });
+
+    it("be.in(array) - fail", function() {
+      (function() {
+        "sub".must.be.in([]);
+      }).should.throwError(Error, {name: "AssertionError"});
+    });
+
+    it("be.in(array, msg) - pass", function() {
+      "item".must.be.in([0, 1, "item"], "Custom message");
+    });
+
+    it("be.in(array, msg) - fail", function() {
+      (function() {
+        "item".must.be.in([0, "true"], "Custom message");
+      }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+    });
+  });
+
+  describe("#must.not.be.in()", function() {
+    it("not.be.in(string) - pass", function() {
+      "str".must.not.be.in("");
+    });
+
+    it("not.be.in(array) - pass", function() {
+      "item".must.not.be.in([]);
+    });
+
+    it("not.be.in(string) - fail", function() {
+      (function() {
+        "sub".must.not.be.in("subway");
+      }).should.throwError(Error, {name: "AssertionError"});
+    });
+
+    it("not.be.in(array) - fail", function() {
+      (function() {
+        "item".must.not.be.in(["item"]);
+      }).should.throwError(Error, {name: "AssertionError"});
+    });
+
+    it("not.be.in(string, msg) - pass", function() {
+      "str".must.not.be.in("");
+    });
+
+    it("not.be.in(array, msg) - pass", function() {
+      "item".must.not.be.in([], "Custom message");
+    });
+
+    it("not.be.in(string, msg) - fail", function() {
+      (function() {
+        "sub".must.not.be.in("substr", "Custom message");
+      }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+    });
+
+    it("not.be.in(array, msg) - fail", function() {
+      (function() {
+        "item".must.not.be.in(["item"], "Custom message");
+      }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+    });
+  });
+
   describe("#must.be.equal()", function() {
     it("be.equal(string) - must be", function() {
       "one".must.be.equal("one");

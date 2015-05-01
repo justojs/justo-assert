@@ -66,6 +66,54 @@ describe("must<Object>", function() {
     });
   });
 
+  describe("#must.be.in()", function() {
+    var obj = {x: 1, y: 2};
+
+    it("be.in(array) - pass", function() {
+      obj.must.be.in([{x: 1, y: 2}]);
+    });
+
+    it("be.in(array) - fail", function() {
+      (function() {
+        obj.must.be.in([]);
+      }).should.throwError(Error, {name: "AssertionError"});
+    });
+
+    it("be.in(array, msg) - pass", function() {
+      obj.must.be.in([{x: 1, y: 2}], "Custom message");
+    });
+
+    it("be.in(array, msg) - fail", function() {
+      (function() {
+        obj.must.be.in([], "Custom message");
+      }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+    });
+  });
+
+  describe("#must.not.be.in()", function() {
+    var obj = {x: 1, y: 2};
+
+    it("not.be.in(array) - pass", function() {
+      obj.must.not.be.in([]);
+    });
+
+    it("not.be.in(array) - fail", function() {
+      (function() {
+        obj.must.not.be.in([{x: 1, y: 2}]);
+      }).should.throwError(Error, {name: "AssertionError"});
+    });
+
+    it("not.be.in(array, msg) - pass", function() {
+      obj.must.not.be.in([], "Custom message");
+    });
+
+    it("not.be.in(array, msg) - fail", function() {
+      (function() {
+        obj.must.not.be.in([{x: 1, y: 2}], "Custom message");
+      }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+    });
+  });
+
   describe("#must.be.equal()", function() {
     it("be.equal(string) - must not", function() {
       (function() {

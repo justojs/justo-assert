@@ -116,6 +116,24 @@ str.must.not.contain("a");
 arr.must.not.contain("a");
 ```
 
+### must.be.in()
+
+Checks whether a value is in a string or array:
+
+```
+substr.must.be.in(str);
+item.must.be.in(arr);
+```
+
+### must.not.be.in()
+
+Checks whether a value is not in a string or array:
+
+```
+substr.must.not.be.in(str);
+item.must.not.be.in(arr);
+```
+
 ### must.have()
 
 Checks whether a value has a property set:

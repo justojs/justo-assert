@@ -61,6 +61,50 @@ describe("must<number>", function() {
     });
   });
 
+  describe("#must.be.in()", function() {
+    it("be.in(array) - pass", function() {
+      x.must.be.in([x]);
+    });
+
+    it("be.in(array) - fail", function() {
+      (function() {
+        x.must.be.in([]);
+      }).should.throwError(Error, {name: "AssertionError"});
+    });
+
+    it("be.in(array, msg) - pass", function() {
+      x.must.be.in([x], "Custom message");
+    });
+
+    it("be.in(array, msg) - fail", function() {
+      (function() {
+        x.must.be.in([], "Custom message");
+      }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+    });
+  });
+
+  describe("#must.not.be.in()", function() {
+    it("not.be.in(array) - pass", function() {
+      x.must.not.be.in([]);
+    });
+
+    it("not.be.in(array) - fail", function() {
+      (function() {
+        x.must.not.be.in([x]);
+      }).should.throwError(Error, {name: "AssertionError"});
+    });
+
+    it("not.be.in(array, msg) - pass", function() {
+      x.must.not.be.in([], "Custom message");
+    });
+
+    it("not.be.in(array, msg) - fail", function() {
+      (function() {
+        x.must.not.be.in([x], "Custom message");
+      }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+    });
+  });
+
   describe("#must.be.equal()", function() {
     it("be.equal(number) - must", function() {
       x.must.be.equal(1);

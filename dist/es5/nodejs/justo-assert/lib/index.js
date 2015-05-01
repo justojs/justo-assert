@@ -121,6 +121,24 @@ exports.mustContain = mustContain;
 exports.mustNotContain = mustNotContain;
 
 /**
+ * Checks whether a value is in a collection.
+ *
+ * @param item:any      The item.
+ * @param col:any       The collection.
+ * @param [msg]:string  The assertion message.
+ */
+exports.mustBeIn = mustBeIn;
+
+/**
+ * Checks whether a value is not in a collection.
+ *
+ * @param item:any      The item.
+ * @param col:any       The collection.
+ * @param [msg]:string  The assertion message.
+ */
+exports.mustNotBeIn = mustNotBeIn;
+
+/**
  * Checks whether an object has specified properties.
  *
  * @overload
@@ -543,6 +561,20 @@ var MustBe = (function (_Wrapper3) {
         mustBeBetween.call.apply(mustBeBetween, [mustBeBetween, this.value].concat(args));
       }
     },
+    "in": {
+
+      /**
+       * Checks whether the wrapped value is in a collection.
+       */
+
+      value: function _in() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustBeIn.call.apply(mustBeIn, [mustBeIn, this.value].concat(args));
+      }
+    },
     lessThan: {
 
       /**
@@ -687,6 +719,20 @@ var MustNotBe = (function (_Wrapper4) {
         }
 
         mustNotBeBetween.call.apply(mustNotBeBetween, [mustNotBeBetween, this.value].concat(args));
+      }
+    },
+    "in": {
+
+      /**
+       * Checks whether the wrapped value isn't in a collection.
+       */
+
+      value: function _in() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustNotBeIn.call.apply(mustNotBeIn, [mustNotBeIn, this.value].concat(args));
       }
     },
     lessThan: {
@@ -844,6 +890,36 @@ function mustContain(col, item, msg) {
 function mustNotContain(col, item, msg) {
   if ((typeof col == "string" || col instanceof Array) && col.indexOf(item) >= 0) {
     throw new AssertionError("'" + col + "' must not contain '" + item + "'.", msg);
+  }
+}
+
+function mustBeIn(item, col, msg) {
+  if (typeof item != "object") {
+    mustContain(col, item, msg);
+  } else {
+    if (col instanceof Array) {
+      for (var i = 0; i < col.length; ++i) {
+        if (deepEqual(item, col[i])) {
+          return;
+        }
+      }
+    }
+
+    throw new AssertionError("'" + col + "' must contain '" + item + "'.", msg);
+  }
+}
+
+function mustNotBeIn(item, col, msg) {
+  if (typeof item != "object") {
+    return mustNotContain(col, item, msg);
+  } else {
+    if (col instanceof Array) {
+      for (var i = 0; i < col.length; ++i) {
+        if (deepEqual(item, col[i])) {
+          throw new AssertionError("'" + col + "' must not contain '" + item + "'.", msg);
+        }
+      }
+    }
   }
 }
 

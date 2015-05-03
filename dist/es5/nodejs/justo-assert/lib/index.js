@@ -812,84 +812,106 @@ var MustNotBe = (function (_Wrapper4) {
 
 //imports
 var assert = require("assert");
+var util = require("util");
 var deepEqual = require("deep-equal");
+
+var uf = util.format;
+
+function f(obj) {
+  var res;
+
+  //(1) format
+  switch (typeof obj) {
+    case "undefined":
+      res = "undefined";break;
+    case "boolean":
+      res = obj.toString();break;
+    case "string":
+      res = obj;break;
+    case "number":
+      res = obj.toString();break;
+    case "function":
+      res = "function" + (obj.name ? " " + obj.name : "");break;
+    default:
+      res = JSON.stringify(obj);break;
+  }
+
+  //(2) return
+  return res;
+}
 function mustBeEqual(actual, expected, msg) {
   if (!deepEqual(actual, expected)) {
-    throw new AssertionError("'" + actual + "' must be equal to '" + expected + "'.", msg);
+    throw new AssertionError(uf("'%s' must be equal to '%s'.", f(actual), f(expected)), msg);
   }
 }
 
 function mustNotBeEqual(actual, expected, msg) {
   if (deepEqual(actual, expected)) {
-    throw new AssertionError("'" + actual + "' must not be equal to '" + expected + "'.", msg);
+    throw new AssertionError(uf("'%s' must not be equal to '%s'.", f(actual), f(expected)), msg);
   }
 }
 
 function mustBeSame(actual, expected, msg) {
-  try {
-    assert.strictEqual(actual, expected);
-  } catch (e) {
-    throw new AssertionError("'" + actual + "' must be the same as '" + expected + "'.", msg);
+  if (actual !== expected) {
+    throw new AssertionError(uf("'%s' must be the same as '%s'.", f(actual), f(expected)), msg);
   }
 }
 
 function mustNotBeSame(actual, expected, msg) {
-  try {
-    assert.notStrictEqual(actual, expected);
-  } catch (e) {
-    throw new AssertionError("'" + actual + "' must not be the same as '" + expected + "'.", msg);
+  if (actual === expected) {
+    throw new AssertionError(uf("'%s' must not be the same as '%s'.", f(actual), f(expected)), msg);
   }
 }
 
 function mustBeBetween(value, left, right, msg) {
   if (!(value >= left && value <= right)) {
-    throw new AssertionError("'" + value + "' must be between '" + left + "' and '" + right + "'.", msg);
+    throw new AssertionError(uf("'%s' must be between '%s' and '%s'.", f(value), f(left), f(right)), msg);
   }
 }
 
 function mustNotBeBetween(value, left, right, msg) {
   if (value >= left && value <= right) {
-    throw new AssertionError("'" + value + "' must not be between '" + left + "' and '" + right + "'.", msg);
+    throw new AssertionError(uf("'%s' must not be between '%s' and '%s'.", f(value), f(left), f(right)), msg);
   }
 }
 
 function mustBeGreaterThan(actual, expected, msg) {
   /* jshint ignore:start */
   if (!(actual > expected)) {
-    throw new AssertionError("'" + actual + "' must be greater than '" + expected + "'.", msg);
+    throw new AssertionError(uf("'%s' must be greater than '%s'.", f(actual), f(expected)), msg);
   }
   /* jshint ignore:end */
 }
 
 function mustNotBeGreaterThan(actual, expected, msg) {
   if (actual > expected) {
-    throw new AssertionError("'" + actual + "' must not be greater than '" + expected + "'.", msg);
+    throw new AssertionError(uf("'%s' must not be greater than '%s'.", f(actual), f(expected)), msg);
   }
 }
 
 function mustBeLessThan(actual, expected, msg) {
   /* jshint ignore:start */
   if (!(actual < expected)) {
-    throw new AssertionError("'" + actual + "' must be less than '" + expected + "'.", msg);
+    throw new AssertionError(uf("'%s' must be less than '%s'.", f(actual), f(expected)), msg);
   }
   /* jshint ignore:end */
 }
 
 function mustNotBeLessThan(actual, expected, msg) {
   if (actual < expected) {
-    throw new AssertionError("'" + actual + "' must not be less than '" + expected + "'.", msg);
+    throw new AssertionError(uf("'%s' must not be less than '%s'.", f(actual), f(expected)), msg);
   }
 }
 
 function mustContain(col, item, msg) {
   if (!((typeof col == "string" || col instanceof Array) && col.indexOf(item) >= 0)) {
-    throw new AssertionError("'" + col + "' must contain '" + item + "'.", msg);
+    throw new AssertionError(uf("'%s' must contain '%s'.", f(col), f(item)), msg);
   }
 }
 
 function mustNotContain(col, item, msg) {
   if ((typeof col == "string" || col instanceof Array) && col.indexOf(item) >= 0) {
-    throw new AssertionError("'" + col + "' must not contain '" + item + "'.", msg);
+    throw new AssertionError(uf("'%s' must not contain '%s'.", f(col), f(item)), msg);
   }
 }
 
@@ -905,7 +927,7 @@ function mustBeIn(item, col, msg) {
       }
     }
 
-    throw new AssertionError("'" + col + "' must contain '" + item + "'.", msg);
+    throw new AssertionError(uf("'%s' must contain '%s'.", f(col), f(item)), msg);
   }
 }
 
@@ -916,7 +938,7 @@ function mustNotBeIn(item, col, msg) {
     if (col instanceof Array) {
       for (var i = 0; i < col.length; ++i) {
         if (deepEqual(item, col[i])) {
-          throw new AssertionError("'" + col + "' must not contain '" + item + "'.", msg);
+          throw new AssertionError(uf("'%s' must not contain '%s'.", f(col), f(item)), msg);
         }
       }
     }
@@ -926,14 +948,14 @@ function mustNotBeIn(item, col, msg) {
 function mustHave(obj, props, msg) {
   if (typeof props == "string") {
     if (!obj.hasOwnProperty(props)) {
-      throw new AssertionError("" + obj + " must have property " + props + ".", msg);
+      throw new AssertionError(uf("'%s' must have property '%s'.", f(obj), f(props)), msg);
     }
   } else if (props instanceof Array) {
     for (var i = 0; i < props.length; ++i) {
       var _name = props[i];
 
       if (!obj.hasOwnProperty(_name)) {
-        throw new AssertionError("" + obj + " must have property " + _name + ".", msg);
+        throw new AssertionError(uf("'%s' must have property '%s'.", f(obj), f(_name)), msg);
       }
     }
   } else {
@@ -942,7 +964,7 @@ function mustHave(obj, props, msg) {
       var value = props[_name2];
 
       if (!obj.hasOwnProperty(_name2) || !deepEqual(obj[_name2], value)) {
-        throw new AssertionError("" + obj + " must have property " + _name2 + "=" + value + ".", msg);
+        throw new AssertionError(uf("'%s' must have property '%s' = '%s'.", f(obj), f(_name2), f(value)), msg);
       }
     }
   }
@@ -951,14 +973,14 @@ function mustHave(obj, props, msg) {
 function mustNotHave(obj, props, msg) {
   if (typeof props == "string") {
     if (obj.hasOwnProperty(props)) {
-      throw new AssertionError("" + obj + " must not have property " + props + ".", msg);
+      throw new AssertionError(uf("'%s' must not have property '%s'.", f(obj), f(props)), msg);
     }
   } else if (props instanceof Array) {
     for (var i = 0; i < props.length; ++i) {
       var _name = props[i];
 
       if (obj.hasOwnProperty(_name)) {
-        throw new AssertionError("" + obj + " must not have property " + _name + ".", msg);
+        throw new AssertionError(uf("'%s' must not have property '%s'.", f(obj), f(props)), msg);
       }
     }
   } else {
@@ -966,10 +988,8 @@ function mustNotHave(obj, props, msg) {
       var _name2 = keys[i];
       var value = props[_name2];
 
-      try {
-        if (obj.hasOwnProperty(_name2)) assert.notDeepEqual(obj[_name2], value);
-      } catch (e) {
-        throw new AssertionError("" + obj + " must have property " + _name2 + "=" + value + ".", msg);
+      if (obj.hasOwnProperty(_name2) && deepEqual(obj[_name2], value)) {
+        throw new AssertionError(uf("'%s' must not have property '%s' = '%s'.", f(obj), f(_name2), f(value)), msg);
       }
     }
   }
@@ -1000,7 +1020,9 @@ function mustHaveAny(obj, props, msg) {
   }
 
   //(2) return
-  if (!res) throw new AssertionError("" + obj + " must have any property of " + props + ".", msg);
+  if (!res) {
+    throw new AssertionError(uf("'%s' must have any property of '%s'.", f(obj), f(props)), msg);
+  }
 }
 
 function mustRaise(fn) {
@@ -1012,7 +1034,7 @@ function mustRaise(fn) {
 
   //(1) pre: arguments
   if (!(fn instanceof Function)) {
-    throw new Error("'" + fn + "' is not a callable object.");
+    throw new Error(uf("'%s' is not a callable object.", f(fn)));
   }
 
   if (args.length == 1) {
@@ -1050,20 +1072,20 @@ function mustRaise(fn) {
   }
 
   if (!thrown) {
-    throw new AssertionError("'" + fn.name + "' expected to throw an error.", msg);
+    throw new AssertionError(uf("'%s' expected to throw an error.", f(fn)), msg);
   } else {
     if (error) {
       if (typeof error == "string") {
         if (thrown.message != error) {
-          throw new AssertionError("'" + fn.name + "' expected to throw error with message '" + error + "'.", msg);
+          throw new AssertionError(uf("'%s' expected to throw error with message '%s'.", f(fn), error), msg);
         }
       } else if (error instanceof Function) {
         if (!(thrown instanceof error)) {
-          throw new AssertionError("'" + fn.name + "' expected to throw error instance of '" + error.name + "'.", msg);
+          throw new AssertionError(uf("'%s' expected to throw error instance of '%s'.", f(fn), error.name), msg);
         }
       } else {
         if (!deepEqual(thrown, error)) {
-          throw new AssertionError("'" + fn.name + "' expected to throw error object '" + error + "'.", msg);
+          throw new AssertionError(uf("'%s' expected to throw error object '%s'.", f(fn), f(error)), msg);
         }
       }
     }
@@ -1079,7 +1101,7 @@ function mustNotRaise(fn) {
 
   //(1) pre: arguments
   if (!(fn instanceof Function)) {
-    throw new Error("'" + fn + "' is not a callable object.");
+    throw new Error(uf("'%s' is not a callable object.", f(fn)));
   }
 
   if (args.length == 1) {
@@ -1118,21 +1140,21 @@ function mustNotRaise(fn) {
 
   if (thrown) {
     if (!error) {
-      throw new AssertionError("'" + fn.name + "' must not throw error.", msg);
+      throw new AssertionError(uf("'%s' must not throw error.", f(fn)), msg);
     } else {
       if (typeof error == "string") {
         if (thrown.message == error) {
-          throw new AssertionError("'" + fn.name + "' must not throw error with message '" + thrown.message + "'.", msg);
+          throw new AssertionError(uf("'%s' must not throw error with message '%s'.", f(fn), thrown.message), msg);
         }
       } else if (error instanceof Function) {
         if (thrown instanceof error) {
-          throw new AssertionError("'" + fn.name + "' must not throw error instance of '" + error.name + "'.", msg);
+          throw new AssertionError(uf("'%s' must not throw error instance of '%s'.", f(fn), error.name), msg);
         }
       } else {
         try {
           assert.notDeepEqual(thrown, error);
         } catch (e) {
-          throw new AssertionError("'" + fn.name + "' must not throw error equal to '" + error + "'.", msg);
+          throw new AssertionError(uf("'%s' must not throw error equal to '%s'.", f(fn), f(error)), msg);
         }
       }
     }
@@ -1152,9 +1174,7 @@ function mustBeInstanceOf(obj, clss, msg) {
 
   //(2) throw error if needed
   if (err) {
-    if (obj instanceof Function) err = "'" + obj.name + "' must be instance of '" + clss.name + "'.";else err = "'" + obj + "' must be instance of '" + clss.name + "'.";
-
-    throw new AssertionError(err, msg);
+    throw new AssertionError(uf("'%s' must be instance of '%s'.", f(obj), clss.name), msg);
   }
 }
 
@@ -1171,9 +1191,7 @@ function mustNotBeInstanceOf(obj, clss, msg) {
 
   //(2) throw error if needed
   if (err) {
-    if (obj instanceof Function) err = "'" + obj.name + "' must not be instance of '" + clss.name + "'.";else err = "'" + obj + "' must not be instance of '" + clss.name + "'.";
-
-    throw new AssertionError(err, msg);
+    throw new AssertionError(uf("'%s' must not be instance of '%s'.", f(obj), clss.name), msg);
   }
 }
 

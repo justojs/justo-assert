@@ -833,7 +833,7 @@ function f(obj) {
     case "function":
       res = "function" + (obj.name ? " " + obj.name : "");break;
     default:
-      res = JSON.stringify(obj);break;
+      res = util.inspect(obj);break;
   }
 
   //(2) return

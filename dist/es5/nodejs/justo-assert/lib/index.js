@@ -29,6 +29,24 @@ exports.mustBeEqual = mustBeEqual;
 exports.mustNotBeEqual = mustNotBeEqual;
 
 /**
+ * Checks whether a value matches a regular expression.
+ *
+ * @param value:any     The value to check.
+ * @param re:RegExp     The regular expression to match.
+ * @param [msg]:string  The assertion message.
+ */
+exports.mustMatch = mustMatch;
+
+/**
+ * Checks whether a value doesn't match a regular expression.
+ *
+ * @param value:any     The value to check.
+ * @param re:RegExp     The regular expression to match.
+ * @param [msg]:string  The assertion message.
+ */
+exports.mustNotMatch = mustNotMatch;
+
+/**
  * Checks whether two values are the same.
  *
  * @param actual:any    The first value.
@@ -412,6 +430,20 @@ var Must = (function (_Wrapper) {
 
         mustRaise.call.apply(mustRaise, [mustRaise, this.value].concat(args));
       }
+    },
+    match: {
+
+      /**
+       * Checks whether the wrapped value matches a regular expression.
+       */
+
+      value: function match() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustMatch.call.apply(mustMatch, [mustMatch, this.value].concat(args));
+      }
     }
   });
 
@@ -483,6 +515,20 @@ var MustNot = (function (_Wrapper2) {
         }
 
         mustNotRaise.call.apply(mustNotRaise, [mustNotRaise, this.value].concat(args));
+      }
+    },
+    match: {
+
+      /**
+       * Checks whether the wrapped valie doesn't match a regular expression.
+       */
+
+      value: function match() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustNotMatch.call.apply(mustNotMatch, [mustNotMatch, this.value].concat(args));
       }
     }
   });
@@ -848,6 +894,18 @@ function mustBeEqual(actual, expected, msg) {
 function mustNotBeEqual(actual, expected, msg) {
   if (deepEqual(actual, expected)) {
     throw new AssertionError(uf("'%s' must not be equal to '%s'.", f(actual), f(expected)), msg);
+  }
+}
+
+function mustMatch(value, re, msg) {
+  if (!re.test(value)) {
+    throw new AssertionError(uf("'%s' must match '%s'.", f(value), f(re)), msg);
+  }
+}
+
+function mustNotMatch(value, re, msg) {
+  if (re.test(value)) {
+    throw new AssertionError(uf("'%s' must not match '%s'.", f(value), f(re)), msg);
   }
 }
 

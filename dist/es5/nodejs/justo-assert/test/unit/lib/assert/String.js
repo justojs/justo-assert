@@ -43,6 +43,30 @@ describe("must<string>", function() {
     });
   });
 
+  describe("#must.match()", function() {
+    it("match(re) - pass", function() {
+      "The National".must.match(/ati/);
+    });
+
+    it("match(re) - fail", function() {
+      (function() {
+        "The National".must.match(/nada/);
+      }).should.throwError(Error, {name: "AssertionError"});
+    });
+  });
+
+  describe("#must.not.match()", function() {
+    it("not.match(re) - pass", function() {
+      "The National".must.not.match(/nada/);
+    });
+
+    it("not.match(re) - fail", function() {
+      (function() {
+        "The National".must.not.match(/ion/);
+      }).should.throwError(Error, {name: "AssertionError"});
+    });
+  });
+
   describe("#must.contain()", function() {
     it("contain(item) - must (1st item)", function() {
       "abc".must.contain("a");

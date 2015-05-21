@@ -1,7 +1,7 @@
 {
   "name": "justo-assert",
-  "version": "0.6.2",
-  "description": "An assertion library.",
+  "version": "0.7.0",
+  "description": "Assertion library.",
   "homepage": "http://www.justojs.org",
   "author": {
     "name": "The Justo.js Development Group",
@@ -74,6 +74,6 @@
     "should": "*"
   },
   "scripts": {
-    "test": "grunt mochaTest:es5"
+    "test": "grunt test"
   }
 }

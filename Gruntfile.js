@@ -5,12 +5,6 @@ module.exports = function(grunt) {
     // Metadata
     pkg: grunt.file.readJSON('package.json'),
 
-    banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
-        '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
-        '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
-        '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
-        ' Licensed <%= props.license %> */\n',
-
     // Task configuration
     babel: {
       options: {
@@ -36,7 +30,12 @@ module.exports = function(grunt) {
       },
 
       preCompiler: {
-        src: ["lib/assert/*.*", "lib/main.js"],
+        src: [
+          "lib/AssertionError.js",
+          "lib/assert.js",
+          "lib/Must.js",
+          "lib/main.js"
+        ],
         dest: "build/es5/lib/index.js"
       }
     },
@@ -67,9 +66,7 @@ module.exports = function(grunt) {
       test: {
         options: {
           jshintrc: true,
-          ignores: [
-            "test/mocha.opts"
-          ]
+          ignores: []
         },
 
         src: ["test/**"]
@@ -94,7 +91,7 @@ module.exports = function(grunt) {
         },
 
         src: [
-          "test/unit/**/*.js"
+          "test/unit/lib/*.js"
         ]
       }
     }
@@ -103,11 +100,9 @@ module.exports = function(grunt) {
   // These plugins provide necessary tasks
   grunt.loadNpmTasks("grunt-babel");
   grunt.loadNpmTasks("grunt-contrib-clean");
-  grunt.loadNpmTasks("grunt-contrib-compress");
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks("grunt-contrib-copy");
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks("grunt-mocha-test");
   grunt.loadNpmTasks("grunt-travis-lint");
 

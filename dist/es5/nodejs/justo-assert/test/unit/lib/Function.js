@@ -1000,4 +1000,20 @@ describe("must<Function>", function() {
       }).should.throwError(Error, {name: "AssertionError", message: "Custom error message"});
     });
   });
+
+  describe("#must.all.have()", function() {
+    it("all.have() - fail", function() {
+      (function() {
+        fn.must.all.have(["x", "y"]);
+      }).should.throwError(Error, {name: "AssertionError", message: "'function fn' must be a list/array."});
+    });
+  });
+
+  describe("#must.not.all.have()", function() {
+    it("not.all.have() - fail", function() {
+      (function() {
+        fn.must.not.all.have(["x", "y"]);
+      }).should.throwError(Error, {name: "AssertionError", message: "'function fn' must be a list/array."});
+    });
+  });
 });

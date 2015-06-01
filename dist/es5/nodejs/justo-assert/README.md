@@ -99,7 +99,7 @@ substr.must.not.be.in(str);
 item.must.not.be.in(arr);
 ```
 
-### must.have() must.not.have()
+### must.have() and must.not.have()
 
 Checks whether a value has a property set:
 
@@ -120,6 +120,18 @@ Checks whether a value have, at least, a specified property:
 ```
 user.must.haveAny(["username", "password"]);
 user.must.haveAny({username: "usr", password: "pwd"});
+```
+
+### must.all.have() and must.not.all.have()
+
+Checks whether all items of a list have a property or set of properties:
+
+```
+array.must.all.have(["username", "password"]);
+array.must.all.have({state: "LOCKED"});
+
+array.must.not.all.have(["posts"]);
+array.must.not.all.have({posts: []});
 ```
 
 ### must.be.instanceOf() and must.not.be.instanceOf()

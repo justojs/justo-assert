@@ -652,4 +652,20 @@ describe("must<string>", function() {
       }).should.throwError(Error, {name: "AssertionError", message: "Custom error message"});
     });
   });
+
+  describe("#must.all.have()", function() {
+    it("all.have() - fail", function() {
+      (function() {
+        "true".must.all.have(["x", "y"]);
+      }).should.throwError(Error, {name: "AssertionError", message: "'true' must be a list/array."});
+    });
+  });
+
+  describe("#must.not.all.have()", function() {
+    it("not.all.have() - fail", function() {
+      (function() {
+        "true".must.not.all.have(["x", "y"]);
+      }).should.throwError(Error, {name: "AssertionError", message: "'true' must be a list/array."});
+    });
+  });
 });

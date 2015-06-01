@@ -212,6 +212,24 @@ exports.mustNotHave = mustNotHave;
 exports.mustHaveAny = mustHaveAny;
 
 /**
+ * Checks whether all items of a list have the specified properties.
+ *
+ * @param list:object[]         The list to check.
+ * @param props:string[]|object The properties to check.
+ * @param [msg]:string          The assertion message.
+ */
+exports.mustAllHave = mustAllHave;
+
+/**
+ * Checks whether all items of a list don't have the specified properties.
+ *
+ * @param list:object[]         The list to check.
+ * @param props:string[]|object The properties to check.
+ * @param msg:string            The assertion message.
+ */
+exports.mustNotAllHave = mustNotAllHave;
+
+/**
  * Checks whether a function throws an error.
  *
  * @overload
@@ -320,541 +338,6 @@ var AssertionError = exports.AssertionError = (function (_AssertionError2) {
 
   return AssertionError;
 })(_AssertionError);
-
-/**
- * A wrapper of a value.
- *
- * @abstract
- * @readonly value:any  The wrapped value.
- */
-
-var Wrapper =
-/**
- * Constructor.
- *
- * @param(attr) value
- */
-function Wrapper(value) {
-  _classCallCheck(this, Wrapper);
-
-  Object.defineProperty(this, "value", { value: value });
-};
-
-/**
- * A must wrapper.
- */
-
-var Must = (function (_Wrapper) {
-  function Must() {
-    _classCallCheck(this, Must);
-
-    if (_Wrapper != null) {
-      _Wrapper.apply(this, arguments);
-    }
-  }
-
-  _inherits(Must, _Wrapper);
-
-  _createClass(Must, {
-    be: {
-      /**
-       * Returns a must.be wrapper.
-       */
-
-      get: function () {
-        return new MustBe(this.value);
-      }
-    },
-    not: {
-
-      /**
-       * Returns a must.not wrapper.
-       */
-
-      get: function () {
-        return new MustNot(this.value);
-      }
-    },
-    contain: {
-
-      /**
-       * Checks whether the wrapped collection contains an item.
-       */
-
-      value: function contain() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        mustContain.call.apply(mustContain, [mustContain, this.value].concat(args));
-      }
-    },
-    have: {
-
-      /**
-       * Checks a wrapped value has a property set.
-       */
-
-      value: function have() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        mustHave.call.apply(mustHave, [mustHave, this.value].concat(args));
-      }
-    },
-    haveAny: {
-
-      /**
-       * Checks whether the wrapped value has any specified property.
-       */
-
-      value: function haveAny() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        mustHaveAny.call.apply(mustHaveAny, [mustHave, this.value].concat(args));
-      }
-    },
-    raise: {
-
-      /**
-       * Checks whether a function raises an error.
-       */
-
-      value: function raise() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        mustRaise.call.apply(mustRaise, [mustRaise, this.value].concat(args));
-      }
-    },
-    match: {
-
-      /**
-       * Checks whether the wrapped value matches a regular expression.
-       */
-
-      value: function match() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        mustMatch.call.apply(mustMatch, [mustMatch, this.value].concat(args));
-      }
-    }
-  });
-
-  return Must;
-})(Wrapper);
-
-/**
- * A must.not wrapper.
- */
-
-var MustNot = (function (_Wrapper2) {
-  function MustNot() {
-    _classCallCheck(this, MustNot);
-
-    if (_Wrapper2 != null) {
-      _Wrapper2.apply(this, arguments);
-    }
-  }
-
-  _inherits(MustNot, _Wrapper2);
-
-  _createClass(MustNot, {
-    be: {
-      /**
-       * A must.not.be wrapper.
-       */
-
-      get: function () {
-        return new MustNotBe(this.value);
-      }
-    },
-    contain: {
-
-      /**
-       * Checks whether the wrapped collection doesn't contain an item.
-       */
-
-      value: function contain() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        mustNotContain.call.apply(mustNotContain, [mustNotContain, this.value].concat(args));
-      }
-    },
-    have: {
-
-      /**
-       * Checks whether the wrapped value hasn't a property set.
-       */
-
-      value: function have() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        mustNotHave.call.apply(mustNotHave, [mustNotHave, this.value].concat(args));
-      }
-    },
-    raise: {
-
-      /**
-       * Checks whether the wrapped function doesn't raise an error.
-       */
-
-      value: function raise() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        mustNotRaise.call.apply(mustNotRaise, [mustNotRaise, this.value].concat(args));
-      }
-    },
-    match: {
-
-      /**
-       * Checks whether the wrapped valie doesn't match a regular expression.
-       */
-
-      value: function match() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        mustNotMatch.call.apply(mustNotMatch, [mustNotMatch, this.value].concat(args));
-      }
-    }
-  });
-
-  return MustNot;
-})(Wrapper);
-
-/**
- * A must.be wrapper.
- */
-
-var MustBe = (function (_Wrapper3) {
-  function MustBe() {
-    _classCallCheck(this, MustBe);
-
-    if (_Wrapper3 != null) {
-      _Wrapper3.apply(this, arguments);
-    }
-  }
-
-  _inherits(MustBe, _Wrapper3);
-
-  _createClass(MustBe, {
-    equal: {
-      /**
-       * Checks whether the wrapped value is equal to another.
-       */
-
-      value: function equal() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        mustBeEqual.call.apply(mustBeEqual, [mustBeEqual, this.value].concat(args));
-      }
-    },
-    eq: {
-
-      /**
-       * @alias equal
-       */
-
-      value: function eq() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        this.equal.apply(this, args);
-      }
-    },
-    same: {
-
-      /**
-       * Checks whether the wrapped value is strictly equal to another.
-       */
-
-      value: function same() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        mustBeSame.call.apply(mustBeSame, [mustBeSame, this.value].concat(args));
-      }
-    },
-    between: {
-
-      /**
-       * Checks whether the wrapped value is between within a range.
-       */
-
-      value: function between() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        mustBeBetween.call.apply(mustBeBetween, [mustBeBetween, this.value].concat(args));
-      }
-    },
-    "in": {
-
-      /**
-       * Checks whether the wrapped value is in a collection.
-       */
-
-      value: function _in() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        mustBeIn.call.apply(mustBeIn, [mustBeIn, this.value].concat(args));
-      }
-    },
-    lessThan: {
-
-      /**
-       * Checks whether the wrapped value is less than another.
-       */
-
-      value: function lessThan() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        mustBeLessThan.call.apply(mustBeLessThan, [mustBeLessThan, this.value].concat(args));
-      }
-    },
-    lt: {
-
-      /**
-       * @alias lessThan
-       */
-
-      value: function lt() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        this.lessThan.apply(this, args);
-      }
-    },
-    greaterThan: {
-
-      /**
-       * Checks whether the wrapped value is greater than another.
-       */
-
-      value: function greaterThan() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        mustBeGreaterThan.call.apply(mustBeGreaterThan, [mustBeGreaterThan, this.value].concat(args));
-      }
-    },
-    gt: {
-
-      /**
-       * @alias greaterThan
-       */
-
-      value: function gt() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        this.greaterThan.apply(this, args);
-      }
-    },
-    instanceOf: {
-
-      /**
-       * Checks whether the wrapped value is an instance of a specified class.
-       */
-
-      value: function instanceOf() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        mustBeInstanceOf.call.apply(mustBeInstanceOf, [mustBeInstanceOf, this.value].concat(args));
-      }
-    }
-  });
-
-  return MustBe;
-})(Wrapper);
-
-/**
- * A must.not.be wrapper.
- */
-
-var MustNotBe = (function (_Wrapper4) {
-  function MustNotBe() {
-    _classCallCheck(this, MustNotBe);
-
-    if (_Wrapper4 != null) {
-      _Wrapper4.apply(this, arguments);
-    }
-  }
-
-  _inherits(MustNotBe, _Wrapper4);
-
-  _createClass(MustNotBe, {
-    equal: {
-      /**
-       * Checks whether the wrapped value isn't equal to another.
-       */
-
-      value: function equal() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        mustNotBeEqual.call.apply(mustNotBeEqual, [mustNotBeEqual, this.value].concat(args));
-      }
-    },
-    eq: {
-
-      /**
-       * @alias equal
-       */
-
-      value: function eq() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        this.equal.apply(this, args);
-      }
-    },
-    same: {
-
-      /**
-       * Checks whether the wrapped value isn't strictly equal to another.
-       */
-
-      value: function same() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        mustNotBeSame.call.apply(mustNotBeSame, [mustNotBeSame, this.value].concat(args));
-      }
-    },
-    between: {
-
-      /**
-       * Checks whether the wrapped value isn't within a range.
-       */
-
-      value: function between() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        mustNotBeBetween.call.apply(mustNotBeBetween, [mustNotBeBetween, this.value].concat(args));
-      }
-    },
-    "in": {
-
-      /**
-       * Checks whether the wrapped value isn't in a collection.
-       */
-
-      value: function _in() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        mustNotBeIn.call.apply(mustNotBeIn, [mustNotBeIn, this.value].concat(args));
-      }
-    },
-    lessThan: {
-
-      /**
-       * Checks whether the wrapped value isn't less than another.
-       */
-
-      value: function lessThan() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        mustNotBeLessThan.call.apply(mustNotBeLessThan, [mustNotBeLessThan, this.value].concat(args));
-      }
-    },
-    lt: {
-
-      /**
-       * @alias lessThan
-       */
-
-      value: function lt() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        this.lessThan.apply(this, args);
-      }
-    },
-    greaterThan: {
-
-      /**
-       * Checks whether the wrapped value isn't greater than another.
-       */
-
-      value: function greaterThan() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        mustNotBeGreaterThan.call.apply(mustNotBeGreaterThan, [mustNotBeGreaterThan, this.value].concat(args));
-      }
-    },
-    gt: {
-
-      /**
-       * @alias greaterThan
-       */
-
-      value: function gt() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        this.greaterThan.apply(this, args);
-      }
-    },
-    instanceOf: {
-
-      /**
-       * Checks whether the wrapped value isn't an instance of a given class.
-       */
-
-      value: function instanceOf() {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        mustNotBeInstanceOf.call.apply(mustNotBeInstanceOf, [mustNotBeInstanceOf, this.value].concat(args));
-      }
-    }
-  });
-
-  return MustNotBe;
-})(Wrapper);
 
 //imports
 var assert = require("assert");
@@ -1083,6 +566,30 @@ function mustHaveAny(obj, props, msg) {
   }
 }
 
+function mustAllHave(list, props, msg) {
+  //(1) arguments
+  if (!(list instanceof Array)) {
+    throw new AssertionError(uf("'%s' must be a list/array.", f(list)), msg);
+  }
+
+  //(2) check
+  for (var i = 0; i < list.length; ++i) {
+    mustHave(list[i], props, msg);
+  }
+}
+
+function mustNotAllHave(list, props, msg) {
+  //(1) arguments
+  if (!(list instanceof Array)) {
+    throw new AssertionError(uf("'%s' must be a list/array.", f(list)), msg);
+  }
+
+  //(2) check
+  for (var i = 0; i < list.length; ++i) {
+    mustNotHave(list[i], props, msg);
+  }
+}
+
 function mustRaise(fn) {
   for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
     args[_key - 1] = arguments[_key];
@@ -1252,6 +759,621 @@ function mustNotBeInstanceOf(obj, clss, msg) {
     throw new AssertionError(uf("'%s' must not be instance of '%s'.", f(obj), clss.name), msg);
   }
 }
+
+/**
+ * A wrapper of a value.
+ *
+ * @abstract
+ * @readonly value:any  The wrapped value.
+ */
+
+var Wrapper =
+/**
+ * Constructor.
+ *
+ * @param(attr) value
+ */
+function Wrapper(value) {
+  _classCallCheck(this, Wrapper);
+
+  Object.defineProperty(this, "value", { value: value });
+};
+
+/**
+ * A must wrapper.
+ */
+
+var Must = (function (_Wrapper) {
+  function Must() {
+    _classCallCheck(this, Must);
+
+    if (_Wrapper != null) {
+      _Wrapper.apply(this, arguments);
+    }
+  }
+
+  _inherits(Must, _Wrapper);
+
+  _createClass(Must, {
+    all: {
+      /**
+       * Returns a must.all wrapper.
+       */
+
+      get: function () {
+        return new MustAll(this.value);
+      }
+    },
+    be: {
+
+      /**
+       * Returns a must.be wrapper.
+       */
+
+      get: function () {
+        return new MustBe(this.value);
+      }
+    },
+    not: {
+
+      /**
+       * Returns a must.not wrapper.
+       */
+
+      get: function () {
+        return new MustNot(this.value);
+      }
+    },
+    contain: {
+
+      /**
+       * Checks whether the wrapped collection contains an item.
+       */
+
+      value: function contain() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustContain.call.apply(mustContain, [mustContain, this.value].concat(args));
+      }
+    },
+    have: {
+
+      /**
+       * Checks a wrapped value has a property set.
+       */
+
+      value: function have() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustHave.call.apply(mustHave, [mustHave, this.value].concat(args));
+      }
+    },
+    haveAny: {
+
+      /**
+       * Checks whether the wrapped value has any specified property.
+       */
+
+      value: function haveAny() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustHaveAny.call.apply(mustHaveAny, [mustHave, this.value].concat(args));
+      }
+    },
+    raise: {
+
+      /**
+       * Checks whether a function raises an error.
+       */
+
+      value: function raise() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustRaise.call.apply(mustRaise, [mustRaise, this.value].concat(args));
+      }
+    },
+    match: {
+
+      /**
+       * Checks whether the wrapped value matches a regular expression.
+       */
+
+      value: function match() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustMatch.call.apply(mustMatch, [mustMatch, this.value].concat(args));
+      }
+    }
+  });
+
+  return Must;
+})(Wrapper);
+
+/**
+ * A must.not wrapper.
+ */
+
+var MustNot = (function (_Wrapper2) {
+  function MustNot() {
+    _classCallCheck(this, MustNot);
+
+    if (_Wrapper2 != null) {
+      _Wrapper2.apply(this, arguments);
+    }
+  }
+
+  _inherits(MustNot, _Wrapper2);
+
+  _createClass(MustNot, {
+    all: {
+      /**
+       * A must.not.all wrapper.
+       */
+
+      get: function () {
+        return new MustNotAll(this.value);
+      }
+    },
+    be: {
+
+      /**
+       * A must.not.be wrapper.
+       */
+
+      get: function () {
+        return new MustNotBe(this.value);
+      }
+    },
+    contain: {
+
+      /**
+       * Checks whether the wrapped collection doesn't contain an item.
+       */
+
+      value: function contain() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustNotContain.call.apply(mustNotContain, [mustNotContain, this.value].concat(args));
+      }
+    },
+    have: {
+
+      /**
+       * Checks whether the wrapped value hasn't a property set.
+       */
+
+      value: function have() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustNotHave.call.apply(mustNotHave, [mustNotHave, this.value].concat(args));
+      }
+    },
+    raise: {
+
+      /**
+       * Checks whether the wrapped function doesn't raise an error.
+       */
+
+      value: function raise() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustNotRaise.call.apply(mustNotRaise, [mustNotRaise, this.value].concat(args));
+      }
+    },
+    match: {
+
+      /**
+       * Checks whether the wrapped valie doesn't match a regular expression.
+       */
+
+      value: function match() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustNotMatch.call.apply(mustNotMatch, [mustNotMatch, this.value].concat(args));
+      }
+    }
+  });
+
+  return MustNot;
+})(Wrapper);
+
+/**
+ * A must.all wrapper.
+ */
+
+var MustAll = (function (_Wrapper3) {
+  function MustAll() {
+    _classCallCheck(this, MustAll);
+
+    if (_Wrapper3 != null) {
+      _Wrapper3.apply(this, arguments);
+    }
+  }
+
+  _inherits(MustAll, _Wrapper3);
+
+  _createClass(MustAll, {
+    have: {
+      value: function have() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustAllHave.call.apply(mustAllHave, [mustAllHave, this.value].concat(args));
+      }
+    }
+  });
+
+  return MustAll;
+})(Wrapper);
+
+/**
+ * A must.not.all wrapper.
+ */
+
+var MustNotAll = (function (_Wrapper4) {
+  function MustNotAll() {
+    _classCallCheck(this, MustNotAll);
+
+    if (_Wrapper4 != null) {
+      _Wrapper4.apply(this, arguments);
+    }
+  }
+
+  _inherits(MustNotAll, _Wrapper4);
+
+  _createClass(MustNotAll, {
+    have: {
+      value: function have() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustNotAllHave.call.apply(mustNotAllHave, [mustNotAllHave, this.value].concat(args));
+      }
+    }
+  });
+
+  return MustNotAll;
+})(Wrapper);
+
+/**
+ * A must.be wrapper.
+ */
+
+var MustBe = (function (_Wrapper5) {
+  function MustBe() {
+    _classCallCheck(this, MustBe);
+
+    if (_Wrapper5 != null) {
+      _Wrapper5.apply(this, arguments);
+    }
+  }
+
+  _inherits(MustBe, _Wrapper5);
+
+  _createClass(MustBe, {
+    equal: {
+      /**
+       * Checks whether the wrapped value is equal to another.
+       */
+
+      value: function equal() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustBeEqual.call.apply(mustBeEqual, [mustBeEqual, this.value].concat(args));
+      }
+    },
+    eq: {
+
+      /**
+       * @alias equal
+       */
+
+      value: function eq() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        this.equal.apply(this, args);
+      }
+    },
+    same: {
+
+      /**
+       * Checks whether the wrapped value is strictly equal to another.
+       */
+
+      value: function same() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustBeSame.call.apply(mustBeSame, [mustBeSame, this.value].concat(args));
+      }
+    },
+    between: {
+
+      /**
+       * Checks whether the wrapped value is between within a range.
+       */
+
+      value: function between() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustBeBetween.call.apply(mustBeBetween, [mustBeBetween, this.value].concat(args));
+      }
+    },
+    "in": {
+
+      /**
+       * Checks whether the wrapped value is in a collection.
+       */
+
+      value: function _in() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustBeIn.call.apply(mustBeIn, [mustBeIn, this.value].concat(args));
+      }
+    },
+    lessThan: {
+
+      /**
+       * Checks whether the wrapped value is less than another.
+       */
+
+      value: function lessThan() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustBeLessThan.call.apply(mustBeLessThan, [mustBeLessThan, this.value].concat(args));
+      }
+    },
+    lt: {
+
+      /**
+       * @alias lessThan
+       */
+
+      value: function lt() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        this.lessThan.apply(this, args);
+      }
+    },
+    greaterThan: {
+
+      /**
+       * Checks whether the wrapped value is greater than another.
+       */
+
+      value: function greaterThan() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustBeGreaterThan.call.apply(mustBeGreaterThan, [mustBeGreaterThan, this.value].concat(args));
+      }
+    },
+    gt: {
+
+      /**
+       * @alias greaterThan
+       */
+
+      value: function gt() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        this.greaterThan.apply(this, args);
+      }
+    },
+    instanceOf: {
+
+      /**
+       * Checks whether the wrapped value is an instance of a specified class.
+       */
+
+      value: function instanceOf() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustBeInstanceOf.call.apply(mustBeInstanceOf, [mustBeInstanceOf, this.value].concat(args));
+      }
+    }
+  });
+
+  return MustBe;
+})(Wrapper);
+
+/**
+ * A must.not.be wrapper.
+ */
+
+var MustNotBe = (function (_Wrapper6) {
+  function MustNotBe() {
+    _classCallCheck(this, MustNotBe);
+
+    if (_Wrapper6 != null) {
+      _Wrapper6.apply(this, arguments);
+    }
+  }
+
+  _inherits(MustNotBe, _Wrapper6);
+
+  _createClass(MustNotBe, {
+    equal: {
+      /**
+       * Checks whether the wrapped value isn't equal to another.
+       */
+
+      value: function equal() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustNotBeEqual.call.apply(mustNotBeEqual, [mustNotBeEqual, this.value].concat(args));
+      }
+    },
+    eq: {
+
+      /**
+       * @alias equal
+       */
+
+      value: function eq() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        this.equal.apply(this, args);
+      }
+    },
+    same: {
+
+      /**
+       * Checks whether the wrapped value isn't strictly equal to another.
+       */
+
+      value: function same() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustNotBeSame.call.apply(mustNotBeSame, [mustNotBeSame, this.value].concat(args));
+      }
+    },
+    between: {
+
+      /**
+       * Checks whether the wrapped value isn't within a range.
+       */
+
+      value: function between() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustNotBeBetween.call.apply(mustNotBeBetween, [mustNotBeBetween, this.value].concat(args));
+      }
+    },
+    "in": {
+
+      /**
+       * Checks whether the wrapped value isn't in a collection.
+       */
+
+      value: function _in() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustNotBeIn.call.apply(mustNotBeIn, [mustNotBeIn, this.value].concat(args));
+      }
+    },
+    lessThan: {
+
+      /**
+       * Checks whether the wrapped value isn't less than another.
+       */
+
+      value: function lessThan() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustNotBeLessThan.call.apply(mustNotBeLessThan, [mustNotBeLessThan, this.value].concat(args));
+      }
+    },
+    lt: {
+
+      /**
+       * @alias lessThan
+       */
+
+      value: function lt() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        this.lessThan.apply(this, args);
+      }
+    },
+    greaterThan: {
+
+      /**
+       * Checks whether the wrapped value isn't greater than another.
+       */
+
+      value: function greaterThan() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustNotBeGreaterThan.call.apply(mustNotBeGreaterThan, [mustNotBeGreaterThan, this.value].concat(args));
+      }
+    },
+    gt: {
+
+      /**
+       * @alias greaterThan
+       */
+
+      value: function gt() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        this.greaterThan.apply(this, args);
+      }
+    },
+    instanceOf: {
+
+      /**
+       * Checks whether the wrapped value isn't an instance of a given class.
+       */
+
+      value: function instanceOf() {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        mustNotBeInstanceOf.call.apply(mustNotBeInstanceOf, [mustNotBeInstanceOf, this.value].concat(args));
+      }
+    }
+  });
+
+  return MustNotBe;
+})(Wrapper);
 
 Number.prototype.__defineGetter__("must", function () {
   return new Must(this);

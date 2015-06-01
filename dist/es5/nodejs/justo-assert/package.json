@@ -1,6 +1,6 @@
 {
   "name": "justo-assert",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Assertion library.",
   "homepage": "http://www.justojs.org",
   "author": {
@@ -63,13 +63,11 @@
     "grunt": "^0.4.5",
     "grunt-babel": "*",
     "grunt-contrib-clean": "*",
-    "grunt-contrib-compress": "*",
     "grunt-contrib-concat": "*",
     "grunt-contrib-copy": "*",
     "grunt-contrib-jshint": "*",
-    "grunt-contrib-uglify": "*",
     "grunt-mocha-test": "*",
-    "grunt-travis-lint": "0.0.3",
+    "grunt-travis-lint": "*",
     "mocha": "*",
     "should": "*"
   },

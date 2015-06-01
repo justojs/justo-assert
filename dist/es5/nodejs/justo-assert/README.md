@@ -152,12 +152,30 @@ Checks whether a function call throws an error:
 
 ```
 fn.must.raise();
+
 fn.must.raise(Error);
 fn.must.raise(Error, ["arg1"]);
 fn.must.raise(Error, ["arg1", "arg2"]);
 
+fn.must.raise("Error message");
+fn.must.raise("Error message", ["arg1"]);
+fn.must.raise("Error message", ["arg1", "arg2"]);
+
+fn.must.raise(/error message pattern/);
+fn.must.raise(/error message pattern/, ["arg1"]);
+fn.must.raise(/error message pattern/, ["arg1", "arg2"]);
+
 fn.must.not.raise();
-fn.must.not.raise(error);
-fn.must.not.raise(error, ["arg1"]);
-fn.must.not.raise(error, ["arg1", "arg2"]);
+
+fn.must.not.raise(Error);
+fn.must.not.raise(Error, ["arg1"]);
+fn.must.not.raise(Error, ["arg1", "arg2"]);
+
+fn.must.not.raise("Error message");
+fn.must.not.raise("Error message", ["arg1"]);
+fn.must.not.raise("Error message", ["arg1", "arg2"]);
+
+fn.must.not.raise(/error message pattern/);
+fn.must.not.raise(/error message pattern/, ["arg1"]);
+fn.must.not.raise(/error message pattern/, ["arg1", "arg2"]);
 ```

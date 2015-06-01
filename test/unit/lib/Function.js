@@ -115,68 +115,90 @@ describe("must<Function>", function() {
 
   describe("#must.raise()", function() {
     describe("must.raise()", function() {
-      it("raise() - must", function() {
+      it("raise() - pass", function() {
         raise.must.raise();
       });
 
-      it("raise() - must not", function() {
+      it("raise() - fail", function() {
         (function() {
           nonraise.must.raise();
         }).should.throwError(Error, {name: "AssertionError"});
       });
     });
 
-    describe("raise(args [, msg])", function() {
-      it("raise(args) - must", function() {
+    describe("raise(args, msg)", function() {
+      it("raise(args) - pass", function() {
         raise.must.raise(["Arg1", "Arg2"]);
       });
 
-      it("raise(args) - must not", function() {
+      it("raise(args) - fail", function() {
         (function() {
           nonraise.must.raise(["Arg1", "Arg2"]);
         }).should.throwError(Error, {name: "AssertionError"});
       });
 
-      it("raise(args, msg) - must", function() {
+      it("raise(args, msg) - pass", function() {
         raise.must.raise(["Arg1", "Arg2"], "Custom message");
       });
 
-      it("raise(args, msg) - must not", function() {
+      it("raise(args, msg) - fail", function() {
         (function() {
           nonraise.must.raise(["Arg1", "Arg2"], "Custom message");
         }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
       });
     });
 
+    describe("raise(error : RegExp, args, msg)", function() {
+      it("raise(error : RegExp) - pass", function() {
+        raise.must.raise(/error/, ["my error message"]);
+      });
+
+      it("raise(error : RegExp) - fail", function() {
+        (function() {
+          raise.must.raise(/pattern/, ["my error message"]);
+        }).should.throwError(Error, {name: "AssertionError"});
+      });
+
+      it("raise(error : RegExp, msg : string) - pass", function() {
+        raise.must.raise(/error/, ["my error message"], "Custom message.");
+      });
+
+      it("raise(error : RegExp, msg : string) - fail", function() {
+        (function() {
+          raise.must.raise(/pattern/, ["my error message"], "Custom message.");
+        }).should.throwError(Error, {name: "AssertionError", message: "Custom message."});
+      });
+    });
+
     describe("raise(error : string, ...args)", function() {
       describe("raise(error : string [, msg])", function() {
-        it("raise(error : string) - must", function() {
+        it("raise(error : string) - pass", function() {
           raise.must.raise("");
         });
 
-        it("raise(error : string) - must not", function() {
+        it("raise(error : string) - fail", function() {
           (function() {
             nonraise.must.raise("Error message");
           }).should.throwError(Error, {name: "AssertionError"});
         });
 
-        it("raise(error : string) with different message - must not", function() {
+        it("raise(error : string) with different message - fail", function() {
           (function() {
             raise.must.raise("x");
           }).should.throwError(Error, {name: "AssertionError"});
         });
 
-        it("raise(error : string, msg) - must", function() {
+        it("raise(error : string, msg) - pass", function() {
           raise.must.raise("", "Custom message");
         });
 
-        it("raise(error : string, msg) - must not", function() {
+        it("raise(error : string, msg) - fail", function() {
           (function() {
             nonraise.must.raise("", "Custom message");
           }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
         });
 
-        it("raise(error : string, msg) with different message - must not", function() {
+        it("raise(error : string, msg) with different message - fail", function() {
           (function() {
             nonraise.must.raise("x", "Custom message");
           }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
@@ -357,6 +379,28 @@ describe("must<Function>", function() {
         (function() {
           raise.must.not.raise(["Arg1", "Arg2"], "Custom message");
         }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+      });
+    });
+
+    describe("not.raise(error : RegExp, args, msg)", function() {
+      it("not.raise(error : RegExp) - pass", function() {
+        raise.must.not.raise(/pattern/, ["my error message"]);
+      });
+
+      it("raise(error : RegExp) - fail", function() {
+        (function() {
+          raise.must.not.raise(/error/, ["my error message"]);
+        }).should.throwError(Error, {name: "AssertionError"});
+      });
+
+      it("raise(error : RegExp, msg : string) - pass", function() {
+        raise.must.not.raise(/pattern/, ["my error message"], "Custom message.");
+      });
+
+      it("raise(error : RegExp, msg : string) - fail", function() {
+        (function() {
+          raise.must.not.raise(/error/, ["my error message"], "Custom message.");
+        }).should.throwError(Error, {name: "AssertionError", message: "Custom message."});
       });
     });
 

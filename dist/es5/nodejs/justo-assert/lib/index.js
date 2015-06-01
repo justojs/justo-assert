@@ -644,6 +644,10 @@ function mustRaise(fn) {
         if (thrown.message != error) {
           throw new AssertionError(uf("'%s' expected to throw error with message '%s'.", f(fn), error), msg);
         }
+      } else if (error instanceof RegExp) {
+        if (!error.test(thrown.message)) {
+          throw new AssertionError(uf("'%s' expected to throw error with message matched to '%s'.", f(fn), error), msg);
+        }
       } else if (error instanceof Function) {
         if (!(thrown instanceof error)) {
           throw new AssertionError(uf("'%s' expected to throw error instance of '%s'.", f(fn), error.name), msg);
@@ -709,7 +713,11 @@ function mustNotRaise(fn) {
     } else {
       if (typeof error == "string") {
         if (thrown.message == error) {
-          throw new AssertionError(uf("'%s' must not throw error with message '%s'.", f(fn), thrown.message), msg);
+          throw new AssertionError(uf("'%s' must not throw error with message '%s'.", f(fn), error), msg);
+        }
+      } else if (error instanceof RegExp) {
+        if (error.test(thrown.message)) {
+          throw new AssertionError(uf("'%s' must not throw error with message matched to '%s'.", f(fn), f(error)), msg);
         }
       } else if (error instanceof Function) {
         if (thrown instanceof error) {

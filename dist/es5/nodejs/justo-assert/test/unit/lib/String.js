@@ -1,45 +1,9 @@
 describe("must<string>", function() {
-  var txt;
-
-  before(function() {
-    txt = "str";
-  });
-
-  describe("#must", function() {
-    it("must", function() {
-      txt.should.have.property("must");
-    });
-
-    it("must.be", function() {
-      txt.must.should.have.property("be");
-    });
-
-    it("must.have", function() {
-      txt.must.should.have.property("have");
-    });
-
-    it("must.haveAny", function() {
-      txt.must.should.have.property("haveAny");
-    });
-
-    it("must.not", function() {
-      txt.must.should.have.property("not");
-    });
-
-    it("must.not.have", function() {
-      txt.must.not.should.have.property("have");
-    });
-
-    it("must.not.be", function() {
-      txt.must.not.should.have.property("be");
-    });
-  });
+  var txt = "str";
 
   describe("#must.raise()", function() {
-    it("raise() - error", function() {
-      (function() {
-        "str".must.raise();
-      }).should.throwError(/is not a callable object/);
+    it("raise() - pass", function() {
+      "str".must.raise();
     });
   });
 
@@ -53,6 +17,12 @@ describe("must<string>", function() {
         "The National".must.match(/nada/);
       }).should.throwError(Error, {name: "AssertionError"});
     });
+
+    it("match(re, msg) - fail", function() {
+      (function() {
+        "The National".must.match(/nada/, "Custom message");
+      }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+    });
   });
 
   describe("#must.not.match()", function() {
@@ -65,24 +35,26 @@ describe("must<string>", function() {
         "The National".must.not.match(/ion/);
       }).should.throwError(Error, {name: "AssertionError"});
     });
+
+    it("not.match(re, msg) - fail", function() {
+      (function() {
+        "The National".must.not.match(/ion/, "Custom message");
+      }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+    });
   });
 
   describe("#must.contain()", function() {
-    it("contain(item) - must (1st item)", function() {
+    it("contain(item) - pass", function() {
       "abc".must.contain("a");
     });
 
-    it("contain(item) - must (another item)", function() {
-      "abc".must.contain("b");
-    });
-
-    it("contain(item) - must not", function() {
+    it("contain(item) - fail", function() {
       (function() {
         "abc".must.contain("d");
       }).should.throwError(Error, {name: "AssertionError"});
     });
 
-    it("contain(item, msg) - must not", function() {
+    it("contain(item, msg) - fail", function() {
       (function() {
         "abc".must.contain("d", "Custom message");
       }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
@@ -90,141 +62,71 @@ describe("must<string>", function() {
   });
 
   describe("#must.not.contain()", function() {
-    it("not.contain(item) - must", function() {
+    it("not.contain(item) - pass", function() {
       "abc".must.not.contain("d");
     });
 
-    it("not.contain(item) - must not (1st item)", function() {
-      (function() {
-        "abc".must.not.contain("a");
-      }).should.throwError(Error, {name: "AssertionError"});
-    });
-
-    it("not.contain(item) - must not (another item)", function() {
+    it("not.contain(item) - fail", function() {
       (function() {
         "abc".must.not.contain("b");
       }).should.throwError(Error, {name: "AssertionError"});
     });
 
-    it("not.contain(item, msg) - must not", function() {
+    it("not.contain(item, msg) - fail", function() {
       (function() {
         "abc".must.not.contain("a", "Custom message");
       }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
     });
   });
 
-  describe("#must.be.in()", function() {
-    it("be.in(string) - pass", function() {
-      "sub".must.be.in("asubstr");
+  describe("#must.be.insideOf()", function() {
+    it("be.insideOf(string) - pass", function() {
+      "sub".must.be.insideOf("asubstr");
     });
 
-    it("be.in(array) - pass", function() {
-      "sub".must.be.in(["sub"]);
-    });
-
-    it("be.in(string) - fail", function() {
+    it("be.insideOf(string) - fail", function() {
       (function() {
-        "sub".must.be.in("");
+        "sub".must.be.insideOf("");
       }).should.throwError(Error, {name: "AssertionError"});
     });
 
-    it("be.in(array) - fail", function() {
+    it("be.insideOf(string, msg) - fail", function() {
       (function() {
-        "sub".must.be.in([]);
-      }).should.throwError(Error, {name: "AssertionError"});
-    });
-
-    it("be.in(array, msg) - pass", function() {
-      "item".must.be.in([0, 1, "item"], "Custom message");
-    });
-
-    it("be.in(array, msg) - fail", function() {
-      (function() {
-        "item".must.be.in([0, "true"], "Custom message");
+        "item".must.be.insideOf("", "Custom message");
       }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
     });
   });
 
-  describe("#must.not.be.in()", function() {
-    it("not.be.in(string) - pass", function() {
-      "str".must.not.be.in("");
+  describe("#must.not.be.insideOf()", function() {
+    it("not.be.insideOf(string) - pass", function() {
+      "str".must.not.be.insideOf("");
     });
 
-    it("not.be.in(array) - pass", function() {
-      "item".must.not.be.in([]);
-    });
-
-    it("not.be.in(string) - fail", function() {
+    it("not.be.insideOf(string) - fail", function() {
       (function() {
-        "sub".must.not.be.in("subway");
+        "sub".must.not.be.insideOf("subway");
       }).should.throwError(Error, {name: "AssertionError"});
     });
 
-    it("not.be.in(array) - fail", function() {
+    it("not.be.insideOf(string, msg) - fail", function() {
       (function() {
-        "item".must.not.be.in(["item"]);
-      }).should.throwError(Error, {name: "AssertionError"});
-    });
-
-    it("not.be.in(string, msg) - pass", function() {
-      "str".must.not.be.in("");
-    });
-
-    it("not.be.in(array, msg) - pass", function() {
-      "item".must.not.be.in([], "Custom message");
-    });
-
-    it("not.be.in(string, msg) - fail", function() {
-      (function() {
-        "sub".must.not.be.in("substr", "Custom message");
-      }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
-    });
-
-    it("not.be.in(array, msg) - fail", function() {
-      (function() {
-        "item".must.not.be.in(["item"], "Custom message");
+        "sub".must.not.be.insideOf("substr", "Custom message");
       }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
     });
   });
 
   describe("#must.be.equal()", function() {
-    it("be.equal(string) - must be", function() {
+    it("be.equal(string) - pass", function() {
       "one".must.be.equal("one");
     });
 
-    it("be.equal(string) - must not be", function() {
+    it("be.equal(string) - fail", function() {
       (function() {
         "one".must.be.equal("two");
-      }).should.throwError(Error, {name: "AssertionError", message: "'one' must be equal to 'two'."});
-    });
-
-    it("be.equal(number) - must be", function() {
-      "1".must.be.equal(1);
-    });
-
-    it("be.equal(number) - must not be", function() {
-      (function() {
-        "1".must.be.equal(2);
-      }).should.throwError(Error, {name: "AssertionError", message: "'1' must be equal to '2'."});
-    });
-
-    it("be.equal(boolean) - must not be", function() {
-      (function() {
-        "true".must.be.equal(true);
       }).should.throwError(Error, {name: "AssertionError"});
     });
 
-    it("be.equal(function) - must not be", function() {
-      (function() {
-        "one".must.be.equal(function() {});
-      }).should.throwError(Error, {name: "AssertionError"});
-    });
-
-    it("be.equal(any, msg) - must be", function() {
-      "one".must.be.equal("one", "Custom error message");
-    });
-
-    it("be.equal(any, msg) - must not be", function() {
+    it("be.equal(any, msg) - fail", function() {
       (function() {
         "one".must.be.equal("two", "Custom error message");
       }).should.throwError(Error, {name: "AssertionError", message: "Custom error message"});
@@ -232,100 +134,56 @@ describe("must<string>", function() {
   });
 
   describe("#must.not.be.equal()", function() {
-    it("not.be.equal(string) - must be", function() {
+    it("not.be.equal(string) - fail", function() {
       (function() {
         "one".must.not.be.equal("one");
       }).should.throwError(Error, {name: "AssertionError"});
     });
 
-    it("not.be.equal(string) - must not be", function() {
-      "one".must.not.be.equal("two");
-    });
-
-    it("not.be.equal(number) - must be", function() {
-      (function() {
-        "1".must.not.be.equal(1);
-      }).should.throwError(Error, {name: "AssertionError"});
-    });
-
-    it("not.be.equal(number) - must not be", function() {
-      "one".must.not.be.equal(1);
-    });
-
-    it("not.be.equal(boolean) - must not be", function() {
-      "one".must.not.be.equal(true);
-    });
-
-    it("not.be.equal(function) - must not be", function() {
-      "one".must.not.be.equal(function() {});
-    });
-
-    it("not.be.equal(any, msg) - must be", function() {
-      "one".must.not.be.equal("two", "Custom error message");
-    });
-
-    it("not.be.equal(any, msg) - must not be", function() {
+    it("not.be.equal(any, msg) - fail", function() {
       (function() {
         "one".must.not.be.equal("one", "Custom error message");
-      }).should.throwError(Error, {name: "AssertionError"});
+      }).should.throwError(Error, {name: "AssertionError", message: "Custom error message"});
+    });
+
+    it("not.be.equal(string) - pass", function() {
+      "one".must.not.be.equal("two");
     });
   });
 
   describe("#must.be.same()", function() {
-    it("be.same(string) - must be", function() {
+    it("be.same(string) - pass", function() {
       "one".must.be.same("one");
     });
 
-    it("be.same(number) - must not be", function() {
+    it("be.same(string) - fail", function() {
       (function() {
-        "1".must.be.same(1);
+        "one".must.be.same("two");
       }).should.throwError(Error, {name: "AssertionError"});
     });
 
-    it("be.same(boolean) - must not be", function() {
+    it("be.same(string, msg) - fail", function() {
       (function() {
-        "true".must.be.same(true);
-      }).should.throwError(Error, {name: "AssertionError"});
-    });
-
-    it("be.same(function) - must not be", function() {
-      (function() {
-        "".must.be.same(function() {});
-      }).should.throwError(Error, {name: "AssertionError"});
-    });
-
-    it("be.same(object) - must not be", function() {
-      (function() {
-        "".must.be.same({});
-      }).should.throwError(Error, {name: "AssertionError"});
+        "one".must.be.same("two", "Custom message");
+      }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
     });
   });
 
   describe("#must.not.be.same()", function() {
-    it("not.be.same(string) - must", function() {
+    it("not.be.same(string) - pass", function() {
       "one".must.not.be.same("two");
     });
 
-    it("not.be.same(string) - must not", function() {
+    it("not.be.same(string) - fail", function() {
       (function() {
         "one".must.not.be.same("one");
       }).should.throwError(Error, {name: "AssertionError"});
     });
 
-    it("not.be.same(number) - must", function() {
-      "1".must.not.be.same(1);
-    });
-
-    it("not.be.same(boolean) - must", function() {
-      "true".must.not.be.same(true);
-    });
-
-    it("not.be.same(function) - must", function() {
-      "".must.not.be.same(function() {});
-    });
-
-    it("not.be.same(object) - must", function() {
-      "".must.not.be.same({});
+    it("not.be.same(string, msg) - fail", function() {
+      (function() {
+        "one".must.not.be.same("one", "Custom message");
+      }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
     });
   });
 
@@ -334,13 +192,13 @@ describe("must<string>", function() {
       "b".must.be.between("a", "c");
     });
 
-    it("between(left, right) - must not", function() {
+    it("between(left, right) - fail", function() {
       (function() {
         "d".must.be.between("a", "c");
-      }).should.throwError(Error, {name: "AssertionError", message: "'d' must be between 'a' and 'c'."});
+      }).should.throwError(Error, {name: "AssertionError"});
     });
 
-    it("between(left, right, msg) - error", function() {
+    it("between(left, right, msg) - fail", function() {
       (function() {
         "d".must.be.between("a", "c", "Custom error message.");
       }).should.throwError(Error, {name: "AssertionError", message: "Custom error message."});
@@ -348,17 +206,17 @@ describe("must<string>", function() {
   });
 
   describe("#must.not.be.between()", function() {
-    it("not.be.between.(a, b) - must", function() {
+    it("not.be.between.(a, b) - pass", function() {
       "a".must.not.be.between("b", "c");
     });
 
-    it("not.be.between(a, b) - must not", function() {
+    it("not.be.between(a, b) - fail", function() {
       (function() {
         "b".must.not.be.between("a", "c");
-      }).should.throwError("'b' must not be between 'a' and 'c'.");
+      }).should.throwError(Error, {name: "AssertionError"});
     });
 
-    it("not.be.between(a, b, msg) - must not", function() {
+    it("not.be.between(a, b, msg) - fail", function() {
       (function() {
         "b".must.not.be.between("a", "c", "Custom message.");
       }).should.throwError(Error, {name: "AssertionError", message: "Custom message."});
@@ -366,17 +224,17 @@ describe("must<string>", function() {
   });
 
   describe("#must.be.lessThan()", function() {
-    it("be.lessThan(bound) - must", function() {
+    it("be.lessThan(bound) - pass", function() {
       "a".must.be.lessThan("b");
     });
 
-    it("be.lessThan(bound) - must not", function() {
+    it("be.lessThan(bound) - fail", function() {
       (function() {
         "b".must.be.lessThan("a");
       }).should.throwError(Error, {name: "AssertionError"});
     });
 
-    it("be.lessThan(bound, msg) - must not", function() {
+    it("be.lessThan(bound, msg) - fail", function() {
       (function() {
         "b".must.be.lessThan("a", "Custom message");
       }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
@@ -384,17 +242,17 @@ describe("must<string>", function() {
   });
 
   describe("#must.not.be.lessThan()", function() {
-    it("not.be.lessThan(bound) - must", function() {
+    it("not.be.lessThan(bound) - pass", function() {
       "a".must.not.be.lessThan("a");
     });
 
-    it("not.be.lessThan(bound) - must not", function() {
+    it("not.be.lessThan(bound) - fail", function() {
       (function() {
         "a".must.not.be.lessThan("b");
       }).should.throwError(Error, {name: "AssertionError"});
     });
 
-    it("not.be.lessThan(bound, msg) - must not", function() {
+    it("not.be.lessThan(bound, msg) - fail", function() {
       (function() {
         "a".must.not.be.lessThan("b", "Custom message");
       }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
@@ -402,17 +260,17 @@ describe("must<string>", function() {
   });
 
   describe("#must.be.greaterThan()", function() {
-    it("be.greaterThan(bound) - must", function() {
+    it("be.greaterThan(bound) - pass", function() {
       "b".must.be.greaterThan("a");
     });
 
-    it("be.greaterThan(bound) - must not", function() {
+    it("be.greaterThan(bound) - fail", function() {
       (function() {
         "a".must.be.greaterThan("a");
       }).should.throwError(Error, {name: "AssertionError"});
     });
 
-    it("be.greaterThan(bound, msg) - must not", function() {
+    it("be.greaterThan(bound, msg) - fail", function() {
       (function() {
         "a".must.be.greaterThan("a", "Custom message");
       }).should.throwError(Error, {name: "AssertionError"});
@@ -420,17 +278,17 @@ describe("must<string>", function() {
   });
 
   describe("#must.not.be.greaterThan()", function() {
-    it("not.be.greaterThan(bound) - must", function() {
+    it("not.be.greaterThan(bound) - pass", function() {
       "a".must.not.be.greaterThan("b");
     });
 
-    it("not.be.greaterThan(bound) - must not", function() {
+    it("not.be.greaterThan(bound) - fail", function() {
       (function() {
         "b".must.not.be.greaterThan("a");
       }).should.throwError(Error, {name: "AssertionError"});
     });
 
-    it("not.be.greaterThan(bound, msg) - must not", function() {
+    it("not.be.greaterThan(bound, msg) - fail", function() {
       (function() {
         "b".must.not.be.greaterThan("a", "Custom message");
       }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
@@ -438,234 +296,112 @@ describe("must<string>", function() {
   });
 
   describe("#must.be.instanceOf()", function() {
-    it("be.instanceOf('String') - pass", function() {
+    it("be.instanceOf(class) - pass", function() {
       "".must.be.instanceOf("String");
     });
 
-    it("be.instanceOf('Number') - fail", function() {
+    it("be.instanceOf(class) - fail", function() {
       (function() {
         "".must.be.instanceOf("Number");
       }).should.throwError(Error, {name: "AssertionError"});
     });
 
-    it("be.instanceOf(string) - must", function() {
-      "".must.be.instanceOf(String);
-    });
-
-    it("be.instanceOf(number) - must not", function() {
+    it("instanceOf(class, msg) - fail", function() {
       (function() {
-        "".must.be.instanceOf(Number);
-      }).should.throwError(Error, {name: "AssertionError"});
-    });
-
-    it("be.instanceOf(boolean) - must not", function() {
-      (function() {
-        "".must.be.instanceOf(Boolean);
-      }).should.throwError(Error, {name: "AssertionError"});
-    });
-
-    it("be.instanceOf(function) - must not", function() {
-      (function() {
-        "".must.be.instanceOf(Function);
-      }).should.throwError(Error, {name: "AssertionError"});
-    });
-
-    it("instanceOf(object) - must not", function() {
-      (function() {
-        "str".must.be.instanceOf(Object);
-      }).should.throwError(Error, {name: "AssertionError"});
-    });
-
-    it("instanceOf(any, msg) - must not", function() {
-      (function() {
-        "str".must.be.instanceOf(Number, "Custom message.");
+        "str".must.be.instanceOf("Number", "Custom message.");
       }).should.throwError(Error, {name: "AssertionError", message: "Custom message."});
     });
   });
 
   describe("#must.not.be.instanceOf()", function() {
-    it("not.be.instanceOf('String') - fail", function() {
+    it("not.be.instanceOf(class) - fail", function() {
       (function() {
         "".must.not.be.instanceOf("String");
       }).should.throwError(Error, {name: "AssertionError"});
     });
 
-    it("not.be.instanceOf('Number') - pass", function() {
-      "".must.not.be.instanceOf("Number");
-    });
-
-    it("not.be.instanceOf(String) - must not", function() {
+    it("not.be.instanceOf(String, msg) - fail", function() {
       (function() {
-        "a".must.not.be.instanceOf(String);
-      }).should.throwError(Error, {name:"AssertionError"});
-    });
-
-    it("not.be.instanceOf(Number) - must", function() {
-      "a".must.not.be.instanceOf(Number);
-    });
-
-    it("not.be.instanceOf(Boolean) - must", function() {
-      "".must.not.be.instanceOf(Boolean);
-    });
-
-    it("not.be.instanceOf(Function) - must", function() {
-      "".must.not.be.instanceOf(Function);
-    });
-
-    it("not.be.instanceOf(Object) - must", function() {
-      "".must.not.be.instanceOf(Object);
-    });
-
-    it("not.be.instanceOf(String, msg) - error", function() {
-      (function() {
-        "a".must.not.be.instanceOf(String, "Custom message.");
+        "a".must.not.be.instanceOf("String", "Custom message.");
       }).should.throwError(Error, {name:"AssertionError", message: "Custom message."});
+    });
+
+    it("not.be.instanceOf(class) - pass", function() {
+      "".must.not.be.instanceOf("Number");
     });
   });
 
   describe("#must.have()", function() {
-    describe("have(prop [, msg])", function() {
-      it("have(prop : String) - must not", function() {
-        (function() {
-          "".must.have("username");
-        }).should.throwError(Error, {name: "AssertionError"});
-      });
-
-      it("have(prop : String, msg) - must not", function() {
-        (function() {
-          "".must.have("username", "Custom error message");
-        }).should.throwError(Error, {name: "AssertionError", message: "Custom error message"});
-      });
+    it("have(prop) - pass", function() {
+      "txt".must.have("length");
     });
 
-    describe("have(props [, msg])", function() {
-      it("have([]) - must", function() {
-        "".must.have([]);
-      });
+    it("have(prop) - fail", function() {
+      (function() {
+        "".must.have("username");
+      }).should.throwError(Error, {name: "AssertionError"});
+    });
 
-      it("have(props : String[]) - must not", function() {
-        (function() {
-          "".must.have(["username", "password"]);
-        }).should.throwError(Error, {name: "AssertionError"});
-      });
-
-      it("have(props : String[], msg) - must not", function() {
-        (function() {
-          "".must.have(["username", "pwd"], "Custom error message");
-        }).should.throwError(Error, {name: "AssertionError", message: "Custom error message"});
-      });
-
-      it("have({}) - must", function() {
-        "".must.have({});
-      });
-
-      it("have(props : Object) - must not", function() {
-        (function() {
-          "".must.have({username: "user", password: "pwd"});
-        }).should.throwError(Error, {name: "AssertionError"});
-      });
-
-      it("have(props : Object, msg) - must not", function() {
-        (function() {
-          "".must.have({username: "user", password: "PWD"}, "Custom error message");
-        }).should.throwError(Error, {name: "AssertionError", message: "Custom error message"});
-      });
+    it("have(prop, msg) - fail", function() {
+      (function() {
+        "".must.have("username", "Custom error message");
+      }).should.throwError(Error, {name: "AssertionError", message: "Custom error message"});
     });
   });
 
   describe("#must.not.have()", function() {
-    describe("not.have(prop [, msg])", function() {
-      it("not.have(prop : String) - must", function() {
-        "".must.not.have("user");
-      });
-
-      it("not.have(prop : String) - must", function() {
-        "".must.not.have("username");
-      });
-
-      it("not.have(prop : String, msg) - must not", function() {
-        "".must.not.have("user", "Custom error message");
-      });
+    it("have(prop) - pass", function() {
+      "txt".must.not.have("count");
     });
 
-    describe("not.have(props [, msg])", function() {
-      it("not.have([]) - must", function() {
-        "".must.not.have([]);
-      });
+    it("have(prop) - fail", function() {
+      (function() {
+        "".must.not.have("length");
+      }).should.throwError(Error, {name: "AssertionError"});
+    });
 
-      it("not.have(props : String[]) - must not", function() {
-        "".must.not.have(["usr", "pwd"]);
-      });
-
-      it("not.have(props : String[], msg) - must not", function() {
-        "".must.not.have(["usr", "pwd"], "Custom error message");
-      });
-
-      it("not.have({}) - must", function() {
-        "".must.not.have({});
-      });
-
-      it("not.have(props : Object) - must", function() {
-        "".must.not.have({username: "user", password: "pwd"});
-      });
-
-      it("not.have(props : Object, msg) - must", function() {
-        "".must.not.have({username: "user", password: "pwd"}, "Custom error message");
-      });
+    it("have(prop, msg) - fail", function() {
+      (function() {
+        "".must.not.have("length", "Custom error message");
+      }).should.throwError(Error, {name: "AssertionError", message: "Custom error message"});
     });
   });
 
   describe("#must.haveAny()", function() {
-    it("haveAny([]) - must not", function() {
-      (function() {
-        "".must.haveAny([]);
-      }).should.throwError(Error, {name: "AssertionError"});
+    it("haveAny(props) - pass", function() {
+      "".must.haveAny(["length"]);
     });
 
-    it("haveAny([], msg) - must not", function() {
-      (function() {
-        "".must.haveAny([], "Custom error message");
-      }).should.throwError(Error, {name: "AssertionError", message: "Custom error message"});
-    });
-
-    it("haveAny(props : string[]) - must not", function() {
+    it("haveAny(props) - fail", function() {
       (function() {
         "".must.haveAny(["user", "username", "usr"]);
       }).should.throwError(Error, {name: "AssertionError"});
     });
 
-    it("haveAny(props : string[], msg) - must not", function() {
+    it("haveAny(props, msg) - must not", function() {
       (function() {
         "".must.haveAny(["user", "usr"], "Custom error message");
-      }).should.throwError(Error, {name: "AssertionError", message: "Custom error message"});
-    });
-
-    it("haveAny(props : object) - must not", function() {
-      (function() {
-        "".must.haveAny({name: "user", username: "user", user: "user"});
-      }).should.throwError(Error, {name: "AssertionError"});
-    });
-
-    it("haveAny(props : object, msg) - must not", function() {
-      (function() {
-        "".must.haveAny({name: "user", user: "user"}, "Custom error message");
       }).should.throwError(Error, {name: "AssertionError", message: "Custom error message"});
     });
   });
 
   describe("#must.all.have()", function() {
-    it("all.have() - fail", function() {
+    it("all.have(item) - fail", function() {
       (function() {
         "true".must.all.have(["x", "y"]);
-      }).should.throwError(Error, {name: "AssertionError", message: "'true' must be a list/array."});
+      }).should.throwError(Error, {name: "AssertionError"});
+    });
+
+    it("all.have(item, msg) - fail", function() {
+      (function() {
+        "true".must.all.have(["x", "y"], "Custom message");
+      }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
     });
   });
 
   describe("#must.not.all.have()", function() {
-    it("not.all.have() - fail", function() {
-      (function() {
-        "true".must.not.all.have(["x", "y"]);
-      }).should.throwError(Error, {name: "AssertionError", message: "'true' must be a list/array."});
+    it("not.all.have() - always pass", function() {
+      "true".must.not.all.have(["x", "y"]);
     });
   });
 });

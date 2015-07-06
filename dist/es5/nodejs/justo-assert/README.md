@@ -2,15 +2,41 @@
 
 An assertion framework.
 
-*Proudly made in Valencia, Spain, EU.*
+*Proudly made in Valencia (The Software City), Spain, EU.*
 
 ## Install
 
+### Node.js
+
 `npm install justo-assert`
 
-## Assertions
+### mongo shell
 
-The assertion is similar to `Should.js` , but with `must`.
+Download the `dist/es5/mongo/justo-assert.js` file from the Git repository.
+
+## Use
+
+### Node.js
+
+```
+require("justo-assert");
+
+var x = 1;
+x.must.be.equal(1); //ok
+x.must.be.equal(2); //AssertionError
+```
+
+### mongo shell
+
+```
+load("justo-assert.js");
+
+var x = 1;
+x.must.be.equal(1); //ok
+x.must.be.equal(2); //AssertionError
+```
+
+## Assertions
 
 ### must.be.equal(), must.be.eq(), must.not.be.equal() and must.not.be.eq()
 
@@ -87,7 +113,7 @@ str.must.not.contain("a");
 arr.must.not.contain("a");
 ```
 
-### must.be.in() and must.not.be.in()
+### must.be.in(), must.not.be.in(), must.be.insideOf() and must.not.be.insideOf()
 
 Checks whether a value is in a string or array:
 
@@ -95,9 +121,17 @@ Checks whether a value is in a string or array:
 substr.must.be.in(str);
 item.must.be.in(arr);
 
+substr.must.be.insideOf(str);
+item.must.be.insideOf(arr);
+
+substr.must.not.be.insideOf(str);
+item.must.not.be.insideOf(arr);
+
 substr.must.not.be.in(str);
 item.must.not.be.in(arr);
 ```
+
+**Note.** The `in` word is a reserved word in ES2015.
 
 ### must.have() and must.not.have()
 

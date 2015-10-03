@@ -16,7 +16,9 @@ function equal(one, two) {
   function deq(one, two) {
     var res;
 
-    if (one.prototype != two.prototype) {
+    if (one === null || one === undefined || two === null || two === undefined) {
+      res = one == two;
+    } else if (one.prototype != two.prototype) {
       res = false;
     } else if (one instanceof Date && two instanceof Date) {
       res = one.getTime() == two.getTime();
@@ -326,7 +328,7 @@ var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_ag
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _AssertionError;
 
@@ -339,6 +341,8 @@ try {
 }
 
 var AssertionError = (function (_AssertionError2) {
+  _inherits(AssertionError, _AssertionError2);
+
   function AssertionError(msg1, msg2) {
     _classCallCheck(this, AssertionError);
 
@@ -352,8 +356,6 @@ var AssertionError = (function (_AssertionError2) {
       _get(Object.getPrototypeOf(AssertionError.prototype), "constructor", this).call(this, { message: msg2 || msg1 });
     }
   }
-
-  _inherits(AssertionError, _AssertionError2);
 
   return AssertionError;
 })(_AssertionError);
@@ -656,13 +658,13 @@ var Wrapper = function Wrapper(value) {
 };
 
 var Must = (function (_Wrapper) {
+  _inherits(Must, _Wrapper);
+
   function Must() {
     _classCallCheck(this, Must);
 
     _get(Object.getPrototypeOf(Must.prototype), "constructor", this).apply(this, arguments);
   }
-
-  _inherits(Must, _Wrapper);
 
   _createClass(Must, [{
     key: "contain",
@@ -730,13 +732,13 @@ var Must = (function (_Wrapper) {
 })(Wrapper);
 
 var MustNot = (function (_Wrapper2) {
+  _inherits(MustNot, _Wrapper2);
+
   function MustNot() {
     _classCallCheck(this, MustNot);
 
     _get(Object.getPrototypeOf(MustNot.prototype), "constructor", this).apply(this, arguments);
   }
-
-  _inherits(MustNot, _Wrapper2);
 
   _createClass(MustNot, [{
     key: "contain",
@@ -790,13 +792,13 @@ var MustNot = (function (_Wrapper2) {
 })(Wrapper);
 
 var MustAll = (function (_Wrapper3) {
+  _inherits(MustAll, _Wrapper3);
+
   function MustAll() {
     _classCallCheck(this, MustAll);
 
     _get(Object.getPrototypeOf(MustAll.prototype), "constructor", this).apply(this, arguments);
   }
-
-  _inherits(MustAll, _Wrapper3);
 
   _createClass(MustAll, [{
     key: "have",
@@ -813,13 +815,13 @@ var MustAll = (function (_Wrapper3) {
 })(Wrapper);
 
 var MustNotAll = (function (_Wrapper4) {
+  _inherits(MustNotAll, _Wrapper4);
+
   function MustNotAll() {
     _classCallCheck(this, MustNotAll);
 
     _get(Object.getPrototypeOf(MustNotAll.prototype), "constructor", this).apply(this, arguments);
   }
-
-  _inherits(MustNotAll, _Wrapper4);
 
   _createClass(MustNotAll, [{
     key: "have",
@@ -836,13 +838,13 @@ var MustNotAll = (function (_Wrapper4) {
 })(Wrapper);
 
 var MustBe = (function (_Wrapper5) {
+  _inherits(MustBe, _Wrapper5);
+
   function MustBe() {
     _classCallCheck(this, MustBe);
 
     _get(Object.getPrototypeOf(MustBe.prototype), "constructor", this).apply(this, arguments);
   }
-
-  _inherits(MustBe, _Wrapper5);
 
   _createClass(MustBe, [{
     key: "equal",
@@ -933,13 +935,13 @@ var MustBe = (function (_Wrapper5) {
 })(Wrapper);
 
 var MustNotBe = (function (_Wrapper6) {
+  _inherits(MustNotBe, _Wrapper6);
+
   function MustNotBe() {
     _classCallCheck(this, MustNotBe);
 
     _get(Object.getPrototypeOf(MustNotBe.prototype), "constructor", this).apply(this, arguments);
   }
-
-  _inherits(MustNotBe, _Wrapper6);
 
   _createClass(MustNotBe, [{
     key: "equal",

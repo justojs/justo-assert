@@ -10,29 +10,19 @@ module.exports = function(grunt) {
     babel: {
       options: {
         sourceMap: false,
+        retainLines: true,
         comments: false,
-        compact: false
+        presets: ["es2015"]
       },
 
-      nodejs: {
-        options: {
-          modules: "common"
-        },
-
+      es5: {
         files: {
-          "build/es5/lib/nodejs.js": "build/es5/lib/index.js"
+          "build/es5/index.js": "index.js",
+          "build/es5/lib/assert.js": "lib/assert.js",
+          "build/es5/lib/AssertionError.js": "lib/AssertionError.js",
+          "build/es5/lib/Must.js": "lib/Must.js"
         }
       },
-
-      mongo: {
-        options: {
-          modules: "ignore"
-        },
-
-        files: {
-          "build/es5/lib/mongo.js": "build/es5/lib/index.js"
-        }
-      }
     },
 
     clean: {
@@ -41,45 +31,11 @@ module.exports = function(grunt) {
       }
     },
 
-    concat: {
-      options: {
-        separator: "\n\n"
-      },
-
-      preCompiler: {
-        src: [
-          "lib/imports.js",
-          "lib/AssertionError.js",
-          "lib/assert.js",
-          "lib/Must.js",
-          "lib/main.js"
-        ],
-        dest: "build/es5/lib/index.js"
-      },
-
-      postCompilerMongo: {
-        options: {
-          banner: "(function() {\n\n",
-          footer: "\n\n})();"
-        },
-
-        src: ["../justo-inline-assert/dist/es5/mongo/justo-inline-assert.js", "build/es5/lib/mongo.js"],
-        dest: "build/es5/lib/mongo.js"
-      }
-    },
-
     copy: {
       nodejs: {
         files: [
-          {src: ["build/es5/lib/nodejs.js"], dest: "dist/es5/nodejs/<%= pkg.name %>/lib/index.js", expand: false},
-          {src: ["package.json", "README.md"], dest: "dist/es5/nodejs/<%= pkg.name %>/", expand: true},
-          {src: ["test/**/*.*"], dest: "dist/es5/nodejs/<%= pkg.name %>", expand: true}
-        ]
-      },
-
-      mongo: {
-        files: [
-          {src: ["build/es5/lib/mongo.js"], dest: "dist/es5/mongo/<%= pkg.name %>.js", expand: false}
+          {cwd: "build/es5/", src: ["index.js", "lib/*.js"], dest: "dist/es5/nodejs/<%= pkg.name %>/", expand: true},
+          {src: ["package.json", "README.md"], dest: "dist/es5/nodejs/<%= pkg.name %>/", expand: true}
         ]
       }
     },
@@ -134,16 +90,13 @@ module.exports = function(grunt) {
   // These plugins provide necessary tasks
   grunt.loadNpmTasks("grunt-babel");
   grunt.loadNpmTasks("grunt-contrib-clean");
-  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks("grunt-contrib-copy");
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks("grunt-mocha-test");
   grunt.loadNpmTasks("grunt-travis-lint");
 
   //aliases
-  grunt.registerTask("compilenodejs", ["babel:nodejs", "copy:nodejs"]);
-  grunt.registerTask("compilemongo", ["babel:mongo", "concat:postCompilerMongo", "copy:mongo"]);
-  grunt.registerTask("buildes5", ["travis-lint", "jshint", "clean:es5", "concat:preCompiler", "compilenodejs", "compilemongo"]);
+  grunt.registerTask("buildes5", ["travis-lint", "jshint", "clean:es5", "babel:es5", "copy:nodejs"]);
   grunt.registerTask("test", ["mochaTest:es5"]);
   grunt.registerTask("es5", ["buildes5", "test"]);
 

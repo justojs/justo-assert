@@ -79,6 +79,42 @@ describe("must<string>", function() {
     });
   });
 
+  describe("#must.be.like()", function() {
+    it("like(re) - pass", function() {
+      "The National".must.be.like(/ati/);
+    });
+
+    it("like(re) - fail", function() {
+      (function() {
+        "The National".must.be.like(/nada/);
+      }).should.throwError(Error, {name: "AssertionError"});
+    });
+
+    it("like(re, msg) - fail", function() {
+      (function() {
+        "The National".must.be.like(/nada/, "Custom message");
+      }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+    });
+  });
+
+  describe("#must.not.be.like()", function() {
+    it("not.be.like(re) - pass", function() {
+      "The National".must.not.be.like(/nada/);
+    });
+
+    it("not.be.like(re) - fail", function() {
+      (function() {
+        "The National".must.not.be.like(/ion/);
+      }).should.throwError(Error, {name: "AssertionError"});
+    });
+
+    it("not.match(re, msg) - fail", function() {
+      (function() {
+        "The National".must.not.be.like(/ion/, "Custom message");
+      }).should.throwError(Error, {name: "AssertionError", message: "Custom message"});
+    });
+  });
+
   describe("#must.be.insideOf()", function() {
     it("be.insideOf(string) - pass", function() {
       "sub".must.be.insideOf("asubstr");

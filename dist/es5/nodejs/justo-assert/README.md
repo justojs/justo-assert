@@ -34,13 +34,16 @@ x.must.not.be.equal(123);
 x.must.not.be.eq(123);
 ```
 
-### must.match() and must.not.match()
+### must.match(), must.not.match(), must.be.like() and must.not.be.like()
 
 Check whether a value matches a regular expression:
 
 ```
 name.must.match(/^Anna/);
 name.must.not.match(/^Anna/);
+
+name.must.be.like(/^Anna/);
+name.must.not.be.like(/^Anna/);
 ```
 
 ### must.be.same() and must.not.be.same()

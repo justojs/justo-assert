@@ -219,7 +219,14 @@ MustBe = function (_Wrapper5) {_inherits(MustBe, _Wrapper5);function MustBe() {_
 
 
     {var _assert$mustBeInstanc;for (var _len18 = arguments.length, args = Array(_len18), _key18 = 0; _key18 < _len18; _key18++) {args[_key18] = arguments[_key18];}
-      (_assert$mustBeInstanc = assert.mustBeInstanceOf).call.apply(_assert$mustBeInstanc, [assert.mustBeInstanceOf, this.value].concat(args));} }]);return MustBe;}(Wrapper);var 
+      (_assert$mustBeInstanc = assert.mustBeInstanceOf).call.apply(_assert$mustBeInstanc, [assert.mustBeInstanceOf, this.value].concat(args));} }, { key: "like", value: function like() 
+
+
+
+
+
+    {var _assert$mustMatch2;for (var _len19 = arguments.length, args = Array(_len19), _key19 = 0; _key19 < _len19; _key19++) {args[_key19] = arguments[_key19];}
+      (_assert$mustMatch2 = assert.mustMatch).call.apply(_assert$mustMatch2, [assert.mustMatch, this.value].concat(args));} }]);return MustBe;}(Wrapper);var 
 
 
 
@@ -230,7 +237,7 @@ MustNotBe = function (_Wrapper6) {_inherits(MustNotBe, _Wrapper6);function MustN
 
 
 
-    {var _assert$mustNotBeEqua;for (var _len19 = arguments.length, args = Array(_len19), _key19 = 0; _key19 < _len19; _key19++) {args[_key19] = arguments[_key19];}
+    {var _assert$mustNotBeEqua;for (var _len20 = arguments.length, args = Array(_len20), _key20 = 0; _key20 < _len20; _key20++) {args[_key20] = arguments[_key20];}
       (_assert$mustNotBeEqua = assert.mustNotBeEqual).call.apply(_assert$mustNotBeEqua, [assert.mustNotBeEqual, this.value].concat(args));} }, { key: "eq", value: function eq() 
 
 
@@ -244,21 +251,21 @@ MustNotBe = function (_Wrapper6) {_inherits(MustNotBe, _Wrapper6);function MustN
 
 
 
-    {var _assert$mustNotBeSame;for (var _len20 = arguments.length, args = Array(_len20), _key20 = 0; _key20 < _len20; _key20++) {args[_key20] = arguments[_key20];}
+    {var _assert$mustNotBeSame;for (var _len21 = arguments.length, args = Array(_len21), _key21 = 0; _key21 < _len21; _key21++) {args[_key21] = arguments[_key21];}
       (_assert$mustNotBeSame = assert.mustNotBeSame).call.apply(_assert$mustNotBeSame, [assert.mustNotBeSame, this.value].concat(args));} }, { key: "between", value: function between() 
 
 
 
 
 
-    {var _assert$mustNotBeBetw;for (var _len21 = arguments.length, args = Array(_len21), _key21 = 0; _key21 < _len21; _key21++) {args[_key21] = arguments[_key21];}
+    {var _assert$mustNotBeBetw;for (var _len22 = arguments.length, args = Array(_len22), _key22 = 0; _key22 < _len22; _key22++) {args[_key22] = arguments[_key22];}
       (_assert$mustNotBeBetw = assert.mustNotBeBetween).call.apply(_assert$mustNotBeBetw, [assert.mustNotBeBetween, this.value].concat(args));} }, { key: "insideOf", value: function insideOf() 
 
 
 
 
 
-    {var _assert$mustNotBeInsi;for (var _len22 = arguments.length, args = Array(_len22), _key22 = 0; _key22 < _len22; _key22++) {args[_key22] = arguments[_key22];}
+    {var _assert$mustNotBeInsi;for (var _len23 = arguments.length, args = Array(_len23), _key23 = 0; _key23 < _len23; _key23++) {args[_key23] = arguments[_key23];}
       (_assert$mustNotBeInsi = assert.mustNotBeInsideOf).call.apply(_assert$mustNotBeInsi, [assert.mustNotBeInsideOf, this.value].concat(args));} }, { key: "in", value: function _in() 
 
 
@@ -269,7 +276,7 @@ MustNotBe = function (_Wrapper6) {_inherits(MustNotBe, _Wrapper6);function MustN
 
 
 
-    {var _assert$mustNotBeLess;for (var _len23 = arguments.length, args = Array(_len23), _key23 = 0; _key23 < _len23; _key23++) {args[_key23] = arguments[_key23];}
+    {var _assert$mustNotBeLess;for (var _len24 = arguments.length, args = Array(_len24), _key24 = 0; _key24 < _len24; _key24++) {args[_key24] = arguments[_key24];}
       (_assert$mustNotBeLess = assert.mustNotBeLessThan).call.apply(_assert$mustNotBeLess, [assert.mustNotBeLessThan, this.value].concat(args));} }, { key: "lt", value: function lt() 
 
 
@@ -283,7 +290,7 @@ MustNotBe = function (_Wrapper6) {_inherits(MustNotBe, _Wrapper6);function MustN
 
 
 
-    {var _assert$mustNotBeGrea;for (var _len24 = arguments.length, args = Array(_len24), _key24 = 0; _key24 < _len24; _key24++) {args[_key24] = arguments[_key24];}
+    {var _assert$mustNotBeGrea;for (var _len25 = arguments.length, args = Array(_len25), _key25 = 0; _key25 < _len25; _key25++) {args[_key25] = arguments[_key25];}
       (_assert$mustNotBeGrea = assert.mustNotBeGreaterThan).call.apply(_assert$mustNotBeGrea, [assert.mustNotBeGreaterThan, this.value].concat(args));} }, { key: "gt", value: function gt() 
 
 
@@ -297,5 +304,12 @@ MustNotBe = function (_Wrapper6) {_inherits(MustNotBe, _Wrapper6);function MustN
 
 
 
-    {var _assert$mustNotBeInst;for (var _len25 = arguments.length, args = Array(_len25), _key25 = 0; _key25 < _len25; _key25++) {args[_key25] = arguments[_key25];}
-      (_assert$mustNotBeInst = assert.mustNotBeInstanceOf).call.apply(_assert$mustNotBeInst, [assert.mustNotBeInstanceOf, this.value].concat(args));} }]);return MustNotBe;}(Wrapper);
+    {var _assert$mustNotBeInst;for (var _len26 = arguments.length, args = Array(_len26), _key26 = 0; _key26 < _len26; _key26++) {args[_key26] = arguments[_key26];}
+      (_assert$mustNotBeInst = assert.mustNotBeInstanceOf).call.apply(_assert$mustNotBeInst, [assert.mustNotBeInstanceOf, this.value].concat(args));} }, { key: "like", value: function like() 
+
+
+
+
+
+    {var _assert$mustNotMatch2;for (var _len27 = arguments.length, args = Array(_len27), _key27 = 0; _key27 < _len27; _key27++) {args[_key27] = arguments[_key27];}
+      (_assert$mustNotMatch2 = assert.mustNotMatch).call.apply(_assert$mustNotMatch2, [assert.mustNotMatch, this.value].concat(args));} }]);return MustNotBe;}(Wrapper);

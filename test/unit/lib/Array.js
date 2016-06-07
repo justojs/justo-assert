@@ -156,4 +156,40 @@ describe("must<Array>", function() {
       });
     });
   });
+
+  describe("#must.be.similarTo()", function() {
+    it("must.be.similarTo() : ok", function() {
+      [1, 2, 3].must.be.similarTo([2, 1, 3]);
+    });
+
+    it("must.be.similarTo() : error", function() {
+      (function() {
+        [1, 2, 3].must.be.similarTo([2, 1, 4]);
+      }).should.throwError(Error, {name: "AssertionError"});
+    });
+
+    it("must.be.similarTo() : error", function() {
+      (function() {
+        [1, 2, 3].must.be.similarTo([2, 1, 4], "Custom message.");
+      }).should.throwError(Error, {name: "AssertionError", message: "Custom message."});
+    });
+  });
+
+  describe("#must.not.be.similarTo()", function() {
+    it("must.not.be.similarTo() : ok", function() {
+      [1, 2, 3].must.not.be.similarTo([2, 1, 4]);
+    });
+
+    it("must.not.be.similarTo() : error", function() {
+      (function() {
+        [1, 2, 3].must.not.be.similarTo([2, 1, 3]);
+      }).should.throwError(Error, {name: "AssertionError"});
+    });
+
+    it("must.be.similarTo() : error", function() {
+      (function() {
+        [1, 2, 3].must.not.be.similarTo([2, 1, 3], "Custom message.");
+      }).should.throwError(Error, {name: "AssertionError", message: "Custom message."});
+    });
+  });
 });

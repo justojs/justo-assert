@@ -1,4 +1,7 @@
-[![Build Status](https://travis-ci.org/justojs/justo-assert.svg)](https://travis-ci.org/justojs/justo-assert)
+[![NPM version](http://img.shields.io/npm/v/justo-assert.svg)](https://www.npmjs.org/package/justo-assert)
+[![Build Status](https://travis-ci.org/justojs/justo-assert.svg?branch=master)](https://travis-ci.org/justojs/justo-assert)
+[![Dependency Status](https://david-dm.org/justojs/justo-assert.svg)](https://david-dm.org/justojs/justo-assert)
+[![devDependency Status](https://david-dm.org/justojs/justo-assert/dev-status.svg)](https://david-dm.org/justojs/justo-assert#info=devDependencies)
 
 An assertion framework.
 
@@ -53,6 +56,15 @@ Check whether if a value is strictly another:
 ```
 user1.must.be.same(user2);
 user1.must.not.be.same(user2);
+```
+
+### must.be.similarTo() and must.not.be.similarTo()
+
+Check whether an array is similar to another:
+
+```
+[1, 2, 3].must.be.similarTo([2, 1, 3]); //true
+[1, 2, 3].must.be.similarTo([1, 2, 4]); //false
 ```
 
 ### must.be.between() and must.not.be.between()
